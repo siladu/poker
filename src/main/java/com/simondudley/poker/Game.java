@@ -9,6 +9,9 @@ import static java.util.stream.Collectors.toList;
 public class Game {
 
     public void startGame(int numPlayers) {
+        if (numPlayers > 23) {
+            throw new IllegalArgumentException("Maximum number of players is 23 for one deck of cards");
+        }
 
         Deck deck = createAndShuffleDeck();
         List<Player> players = createPlayers(numPlayers);

@@ -14,6 +14,8 @@ public class Game {
         List<Player> players = createPlayers(numPlayers);
         dealToPlayers(deck, players);
 
+        players.forEach(System.out::println);
+
         Set<Deck.Card> flop = deck.remove(3);
         System.out.println("FLOP: " + flop);
         Set<Deck.Card> turn = deck.remove(1);

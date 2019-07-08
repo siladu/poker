@@ -5,10 +5,15 @@ import java.util.*;
 public class Deck {
 
     private static final int SIZE = 52;
-    private Set<Card> cards;
+
+    private List<Card> cards;
+
+    public void shuffle() {
+        Collections.shuffle(cards);
+    }
 
     public static Deck newInstance() {
-        Set<Card> cards = new HashSet<>();
+        List<Card> cards = new ArrayList<>();
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
                 cards.add(new Card(rank, suit));
@@ -18,15 +23,17 @@ public class Deck {
     }
 
     public static Deck emptyDeck() {
-        return new Deck(new HashSet<>());
+        return new Deck(new ArrayList<>());
     }
 
-    private Deck(Set<Card> cards) {
+    private Deck(List<Card> cards) {
         this.cards = cards;
     }
 
     public void add(Card card) {
-        cards.add(card);
+        if (!cards.contains(card)) {
+            cards.add(card);
+        }
     }
 
     public Set<Card> remove(int n) {
@@ -52,6 +59,13 @@ public class Deck {
 
     public boolean isEmpty() {
         return cards.size() == 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Deck{" +
+                "cards=" + cards +
+                '}';
     }
 
     public static class Card implements Comparable {

@@ -120,11 +120,15 @@ public class Deck {
         ACE(14, "A");
 
         private int value;
-        private String symbol;
 
+        private String symbol;
         Rank(int value, String symbol) {
             this.value = value;
             this.symbol = symbol;
+        }
+
+        public int getValue() {
+            return value;
         }
     }
 

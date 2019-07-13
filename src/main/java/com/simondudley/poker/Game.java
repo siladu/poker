@@ -19,9 +19,31 @@ class Game {
         Deck deck = createAndShuffleDeck();
         List<Player> players = createPlayers(numPlayers);
         dealToPlayers(deck, players);
+        List<Card> board = dealBoard(deck);
+        determineWinners(players, board);
+    }
 
+    private Deck createAndShuffleDeck() {
+        Deck deck = Deck.newInstance();
+        System.out.println(deck);
+        System.out.println("SHUFFLE...");
+        deck.shuffle();
+        System.out.println(deck);
+        return deck;
+    }
+
+    private List<Player> createPlayers(int n) {
+        return IntStream.rangeClosed(1, n).mapToObj(Player::new).collect(toList());
+    }
+
+    private void dealToPlayers(Deck deck, List<Player> players) {
+        for (Player player : players) {
+            player.pocket = deck.removeOptional(2);
+        }
         players.forEach(System.out::println);
+    }
 
+    private List<Card> dealBoard(Deck deck) {
         List<Card> board;
         List<Card> flop = deck.removeOptional(3);
         System.out.println("FLOP: " + flop);
@@ -33,9 +55,7 @@ class Game {
         System.out.println("RIVER: " + river);
         board.add(river);
         System.out.println("BOARD: " + board);
-
-        // determine winner
-        determineWinners(players, board);
+        return board;
     }
 
     Map<Player, Hand> determineWinners(List<Player> players, List<Card> board) {
@@ -45,8 +65,7 @@ class Game {
         }
         Optional<Map.Entry<Player, Hand>> winner = playersBestHands.entrySet().stream().max(Comparator.comparing(Map.Entry::getValue));
         System.out.println("WINNER = " + winner.get());
-        Map<Player, Hand> winners = Map.ofEntries(winner.get());
-        return winners;
+        return Map.ofEntries(winner.get());
     }
 
     private Hand bestHandFor(Player player, List<Card> board) {
@@ -64,25 +83,6 @@ class Game {
         Optional<Hand> bestHand = hands.stream().max(Comparator.naturalOrder());
         System.out.println(String.format("[PLAYER %s] Best Hand = %s", player.id, bestHand.get()));
         return bestHand.get();
-    }
-
-    private void dealToPlayers(Deck deck, List<Player> players) {
-        for (Player player : players) {
-            player.pocket = deck.removeOptional(2);
-        }
-    }
-
-    private Deck createAndShuffleDeck() {
-        Deck deck = Deck.newInstance();
-        System.out.println(deck);
-        System.out.println("SHUFFLE...");
-        deck.shuffle();
-        System.out.println(deck);
-        return deck;
-    }
-
-    private List<Player> createPlayers(int n) {
-        return IntStream.rangeClosed(1, n).mapToObj(Player::new).collect(toList());
     }
 
     public static class Player {

@@ -4,8 +4,8 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static com.simondudley.poker.Deck.Rank.*;
-import static com.simondudley.poker.Deck.Suit.*;
+import static com.simondudley.poker.Card.Rank.*;
+import static com.simondudley.poker.Card.Suit.*;
 import static com.simondudley.poker.Hand.HandValue.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,19 +13,19 @@ public class HandComparisonTest {
 
     @Test
     public void highestStraightFlushShouldWin() {
-        List<Deck.Card> highStraight = List.of(
-                new Deck.Card(ACE, SPADES),
-                new Deck.Card(KING, SPADES),
-                new Deck.Card(QUEEN, SPADES),
-                new Deck.Card(JACK, SPADES),
-                new Deck.Card(TEN, SPADES));
+        List<Card> highStraight = List.of(
+                new Card(ACE, SPADES),
+                new Card(KING, SPADES),
+                new Card(QUEEN, SPADES),
+                new Card(JACK, SPADES),
+                new Card(TEN, SPADES));
 
-        List<Deck.Card> lowStraight = List.of(
-                new Deck.Card(KING, SPADES),
-                new Deck.Card(QUEEN, SPADES),
-                new Deck.Card(JACK, SPADES),
-                new Deck.Card(TEN, SPADES),
-                new Deck.Card(NINE, SPADES));
+        List<Card> lowStraight = List.of(
+                new Card(KING, SPADES),
+                new Card(QUEEN, SPADES),
+                new Card(JACK, SPADES),
+                new Card(TEN, SPADES),
+                new Card(NINE, SPADES));
 
         assertThat(Hand.from(highStraight).getHandValue()).isEqualTo(STRAIGHT_FLUSH);
         assertThat(Hand.from(highStraight)).isGreaterThan(Hand.from(lowStraight));
@@ -33,19 +33,19 @@ public class HandComparisonTest {
 
     @Test
     public void straightFlushShouldBeEqual() {
-        List<Deck.Card> equalStraight1 = List.of(
-                new Deck.Card(ACE, SPADES),
-                new Deck.Card(KING, SPADES),
-                new Deck.Card(QUEEN, SPADES),
-                new Deck.Card(JACK, SPADES),
-                new Deck.Card(TEN, SPADES));
+        List<Card> equalStraight1 = List.of(
+                new Card(ACE, SPADES),
+                new Card(KING, SPADES),
+                new Card(QUEEN, SPADES),
+                new Card(JACK, SPADES),
+                new Card(TEN, SPADES));
 
-        List<Deck.Card> equalStraight2 = List.of(
-                new Deck.Card(ACE, SPADES),
-                new Deck.Card(KING, SPADES),
-                new Deck.Card(QUEEN, SPADES),
-                new Deck.Card(JACK, SPADES),
-                new Deck.Card(TEN, SPADES));
+        List<Card> equalStraight2 = List.of(
+                new Card(ACE, SPADES),
+                new Card(KING, SPADES),
+                new Card(QUEEN, SPADES),
+                new Card(JACK, SPADES),
+                new Card(TEN, SPADES));
 
         assertThat(Hand.from(equalStraight1).getHandValue()).isEqualTo(STRAIGHT_FLUSH);
         assertThat(Hand.from(equalStraight1)).isEqualTo(Hand.from(equalStraight2));
@@ -53,19 +53,19 @@ public class HandComparisonTest {
 
     @Test
     public void straightFlushOnBoardShouldBeEqual() {
-        List<Deck.Card> equalStraight1 = List.of(
-                new Deck.Card(ACE, SPADES),
-                new Deck.Card(KING, SPADES),
-                new Deck.Card(QUEEN, SPADES),
-                new Deck.Card(JACK, SPADES),
-                new Deck.Card(TEN, SPADES));
+        List<Card> equalStraight1 = List.of(
+                new Card(ACE, SPADES),
+                new Card(KING, SPADES),
+                new Card(QUEEN, SPADES),
+                new Card(JACK, SPADES),
+                new Card(TEN, SPADES));
 
-        List<Deck.Card> equalStraight2 = List.of(
-                new Deck.Card(ACE, SPADES),
-                new Deck.Card(KING, SPADES),
-                new Deck.Card(QUEEN, SPADES),
-                new Deck.Card(JACK, SPADES),
-                new Deck.Card(TEN, SPADES));
+        List<Card> equalStraight2 = List.of(
+                new Card(ACE, SPADES),
+                new Card(KING, SPADES),
+                new Card(QUEEN, SPADES),
+                new Card(JACK, SPADES),
+                new Card(TEN, SPADES));
 
         assertThat(Hand.from(equalStraight1).getHandValue()).isEqualTo(STRAIGHT_FLUSH);
         assertThat(Hand.from(equalStraight1)).isEqualTo(Hand.from(equalStraight2));
@@ -73,19 +73,19 @@ public class HandComparisonTest {
 
     @Test
     public void highestFourOfAKindShouldWin() {
-        List<Deck.Card> highestFour = List.of(
-                new Deck.Card(FOUR, SPADES),
-                new Deck.Card(FOUR, CLUBS),
-                new Deck.Card(FOUR, HEARTS),
-                new Deck.Card(FOUR, DIAMONDS),
-                new Deck.Card(THREE, SPADES));
+        List<Card> highestFour = List.of(
+                new Card(FOUR, SPADES),
+                new Card(FOUR, CLUBS),
+                new Card(FOUR, HEARTS),
+                new Card(FOUR, DIAMONDS),
+                new Card(THREE, SPADES));
 
-        List<Deck.Card> lowestFour = List.of(
-                new Deck.Card(THREE, SPADES),
-                new Deck.Card(THREE, CLUBS),
-                new Deck.Card(THREE, HEARTS),
-                new Deck.Card(THREE, DIAMONDS),
-                new Deck.Card(TWO, SPADES));
+        List<Card> lowestFour = List.of(
+                new Card(THREE, SPADES),
+                new Card(THREE, CLUBS),
+                new Card(THREE, HEARTS),
+                new Card(THREE, DIAMONDS),
+                new Card(TWO, SPADES));
 
         assertThat(Hand.from(highestFour).getHandValue()).isEqualTo(FOUR_OF_A_KIND);
         assertThat(Hand.from(highestFour)).isGreaterThan(Hand.from(lowestFour));
@@ -93,19 +93,19 @@ public class HandComparisonTest {
 
     @Test
     public void whenFourOfAKindEqual_kickerShouldWin() {
-        List<Deck.Card> highestKicker = List.of(
-                new Deck.Card(FOUR, SPADES),
-                new Deck.Card(FOUR, CLUBS),
-                new Deck.Card(FOUR, HEARTS),
-                new Deck.Card(FOUR, DIAMONDS),
-                new Deck.Card(THREE, SPADES));
+        List<Card> highestKicker = List.of(
+                new Card(FOUR, SPADES),
+                new Card(FOUR, CLUBS),
+                new Card(FOUR, HEARTS),
+                new Card(FOUR, DIAMONDS),
+                new Card(THREE, SPADES));
 
-        List<Deck.Card> lowestKicker = List.of(
-                new Deck.Card(FOUR, SPADES),
-                new Deck.Card(FOUR, CLUBS),
-                new Deck.Card(FOUR, HEARTS),
-                new Deck.Card(FOUR, DIAMONDS),
-                new Deck.Card(TWO, SPADES));
+        List<Card> lowestKicker = List.of(
+                new Card(FOUR, SPADES),
+                new Card(FOUR, CLUBS),
+                new Card(FOUR, HEARTS),
+                new Card(FOUR, DIAMONDS),
+                new Card(TWO, SPADES));
 
         assertThat(Hand.from(highestKicker).getHandValue()).isEqualTo(FOUR_OF_A_KIND);
         assertThat(Hand.from(highestKicker)).isGreaterThan(Hand.from(lowestKicker));
@@ -113,19 +113,19 @@ public class HandComparisonTest {
 
     @Test
     public void fourOfAKindShouldBeEqual() {
-        List<Deck.Card> equalKicker1 = List.of(
-                new Deck.Card(FOUR, SPADES),
-                new Deck.Card(FOUR, CLUBS),
-                new Deck.Card(FOUR, HEARTS),
-                new Deck.Card(FOUR, DIAMONDS),
-                new Deck.Card(THREE, SPADES));
+        List<Card> equalKicker1 = List.of(
+                new Card(FOUR, SPADES),
+                new Card(FOUR, CLUBS),
+                new Card(FOUR, HEARTS),
+                new Card(FOUR, DIAMONDS),
+                new Card(THREE, SPADES));
 
-        List<Deck.Card> equalKicker2 = List.of(
-                new Deck.Card(FOUR, SPADES),
-                new Deck.Card(FOUR, CLUBS),
-                new Deck.Card(FOUR, HEARTS),
-                new Deck.Card(FOUR, DIAMONDS),
-                new Deck.Card(THREE, HEARTS));
+        List<Card> equalKicker2 = List.of(
+                new Card(FOUR, SPADES),
+                new Card(FOUR, CLUBS),
+                new Card(FOUR, HEARTS),
+                new Card(FOUR, DIAMONDS),
+                new Card(THREE, HEARTS));
 
         assertThat(Hand.from(equalKicker1).getHandValue()).isEqualTo(FOUR_OF_A_KIND);
         assertThat(Hand.from(equalKicker1)).isEqualTo(Hand.from(equalKicker2));
@@ -133,19 +133,19 @@ public class HandComparisonTest {
 
     @Test
     public void highestThreeOfFullHouseShouldWin() {
-        List<Deck.Card> highestThree = List.of(
-                new Deck.Card(THREE, SPADES),
-                new Deck.Card(THREE, CLUBS),
-                new Deck.Card(THREE, HEARTS),
-                new Deck.Card(TWO, SPADES),
-                new Deck.Card(TWO, CLUBS));
+        List<Card> highestThree = List.of(
+                new Card(THREE, SPADES),
+                new Card(THREE, CLUBS),
+                new Card(THREE, HEARTS),
+                new Card(TWO, SPADES),
+                new Card(TWO, CLUBS));
 
-        List<Deck.Card> lowestThree = List.of(
-                new Deck.Card(TWO, SPADES),
-                new Deck.Card(TWO, CLUBS),
-                new Deck.Card(TWO, HEARTS),
-                new Deck.Card(ACE, CLUBS),
-                new Deck.Card(ACE, SPADES));
+        List<Card> lowestThree = List.of(
+                new Card(TWO, SPADES),
+                new Card(TWO, CLUBS),
+                new Card(TWO, HEARTS),
+                new Card(ACE, CLUBS),
+                new Card(ACE, SPADES));
 
         assertThat(Hand.from(highestThree).getHandValue()).isEqualTo(FULL_HOUSE);
         assertThat(Hand.from(highestThree)).isGreaterThan(Hand.from(lowestThree));
@@ -153,19 +153,19 @@ public class HandComparisonTest {
 
     @Test
     public void highestPairOfFullHouseShouldWin() {
-        List<Deck.Card> highestPair = List.of(
-                new Deck.Card(THREE, SPADES),
-                new Deck.Card(THREE, CLUBS),
-                new Deck.Card(THREE, HEARTS),
-                new Deck.Card(ACE, CLUBS),
-                new Deck.Card(ACE, SPADES));
+        List<Card> highestPair = List.of(
+                new Card(THREE, SPADES),
+                new Card(THREE, CLUBS),
+                new Card(THREE, HEARTS),
+                new Card(ACE, CLUBS),
+                new Card(ACE, SPADES));
 
-        List<Deck.Card> lowestPair = List.of(
-                new Deck.Card(THREE, SPADES),
-                new Deck.Card(THREE, CLUBS),
-                new Deck.Card(THREE, HEARTS),
-                new Deck.Card(KING, CLUBS),
-                new Deck.Card(KING, SPADES));
+        List<Card> lowestPair = List.of(
+                new Card(THREE, SPADES),
+                new Card(THREE, CLUBS),
+                new Card(THREE, HEARTS),
+                new Card(KING, CLUBS),
+                new Card(KING, SPADES));
 
         assertThat(Hand.from(highestPair).getHandValue()).isEqualTo(FULL_HOUSE);
         assertThat(Hand.from(highestPair)).isGreaterThan(Hand.from(lowestPair));
@@ -173,19 +173,19 @@ public class HandComparisonTest {
 
     @Test
     public void fullHouseShouldBeEqual() {
-        List<Deck.Card> highestPair = List.of(
-                new Deck.Card(THREE, SPADES),
-                new Deck.Card(THREE, CLUBS),
-                new Deck.Card(THREE, HEARTS),
-                new Deck.Card(ACE, CLUBS),
-                new Deck.Card(ACE, SPADES));
+        List<Card> highestPair = List.of(
+                new Card(THREE, SPADES),
+                new Card(THREE, CLUBS),
+                new Card(THREE, HEARTS),
+                new Card(ACE, CLUBS),
+                new Card(ACE, SPADES));
 
-        List<Deck.Card> lowestPair = List.of(
-                new Deck.Card(THREE, SPADES),
-                new Deck.Card(THREE, CLUBS),
-                new Deck.Card(THREE, HEARTS),
-                new Deck.Card(ACE, HEARTS),
-                new Deck.Card(ACE, DIAMONDS));
+        List<Card> lowestPair = List.of(
+                new Card(THREE, SPADES),
+                new Card(THREE, CLUBS),
+                new Card(THREE, HEARTS),
+                new Card(ACE, HEARTS),
+                new Card(ACE, DIAMONDS));
 
         assertThat(Hand.from(highestPair).getHandValue()).isEqualTo(FULL_HOUSE);
         assertThat(Hand.from(highestPair)).isEqualTo(Hand.from(lowestPair));
@@ -193,19 +193,19 @@ public class HandComparisonTest {
 
     @Test
     public void highestFlushShouldWin() {
-        List<Deck.Card> highFlush = List.of(
-                new Deck.Card(ACE, SPADES),
-                new Deck.Card(KING, SPADES),
-                new Deck.Card(JACK, SPADES),
-                new Deck.Card(TEN, SPADES),
-                new Deck.Card(THREE, SPADES));
+        List<Card> highFlush = List.of(
+                new Card(ACE, SPADES),
+                new Card(KING, SPADES),
+                new Card(JACK, SPADES),
+                new Card(TEN, SPADES),
+                new Card(THREE, SPADES));
 
-        List<Deck.Card> lowFlush = List.of(
-                new Deck.Card(ACE, HEARTS),
-                new Deck.Card(KING, HEARTS),
-                new Deck.Card(JACK, HEARTS),
-                new Deck.Card(TEN, HEARTS),
-                new Deck.Card(TWO, HEARTS));
+        List<Card> lowFlush = List.of(
+                new Card(ACE, HEARTS),
+                new Card(KING, HEARTS),
+                new Card(JACK, HEARTS),
+                new Card(TEN, HEARTS),
+                new Card(TWO, HEARTS));
 
         assertThat(Hand.from(highFlush).getHandValue()).isEqualTo(FLUSH);
         assertThat(Hand.from(highFlush)).isGreaterThan(Hand.from(lowFlush));
@@ -213,19 +213,19 @@ public class HandComparisonTest {
 
     @Test
     public void flushShouldBeEqual() {
-        List<Deck.Card> equalFlush1 = List.of(
-                new Deck.Card(ACE, SPADES),
-                new Deck.Card(KING, SPADES),
-                new Deck.Card(JACK, SPADES),
-                new Deck.Card(TEN, SPADES),
-                new Deck.Card(THREE, SPADES));
+        List<Card> equalFlush1 = List.of(
+                new Card(ACE, SPADES),
+                new Card(KING, SPADES),
+                new Card(JACK, SPADES),
+                new Card(TEN, SPADES),
+                new Card(THREE, SPADES));
 
-        List<Deck.Card> equalFlush2 = List.of(
-                new Deck.Card(ACE, HEARTS),
-                new Deck.Card(KING, HEARTS),
-                new Deck.Card(JACK, HEARTS),
-                new Deck.Card(TEN, HEARTS),
-                new Deck.Card(THREE, HEARTS));
+        List<Card> equalFlush2 = List.of(
+                new Card(ACE, HEARTS),
+                new Card(KING, HEARTS),
+                new Card(JACK, HEARTS),
+                new Card(TEN, HEARTS),
+                new Card(THREE, HEARTS));
 
         assertThat(Hand.from(equalFlush1).getHandValue()).isEqualTo(FLUSH);
         assertThat(Hand.from(equalFlush1)).isEqualTo(Hand.from(equalFlush2));
@@ -233,19 +233,19 @@ public class HandComparisonTest {
 
     @Test
     public void highestStraightShouldWin() {
-        List<Deck.Card> highStraight = List.of(
-                new Deck.Card(ACE, SPADES),
-                new Deck.Card(KING, CLUBS),
-                new Deck.Card(QUEEN, HEARTS),
-                new Deck.Card(JACK, SPADES),
-                new Deck.Card(TEN, CLUBS));
+        List<Card> highStraight = List.of(
+                new Card(ACE, SPADES),
+                new Card(KING, CLUBS),
+                new Card(QUEEN, HEARTS),
+                new Card(JACK, SPADES),
+                new Card(TEN, CLUBS));
 
-        List<Deck.Card> lowStraight = List.of(
-                new Deck.Card(KING, HEARTS),
-                new Deck.Card(QUEEN, DIAMONDS),
-                new Deck.Card(JACK, CLUBS),
-                new Deck.Card(TEN, DIAMONDS),
-                new Deck.Card(NINE, HEARTS));
+        List<Card> lowStraight = List.of(
+                new Card(KING, HEARTS),
+                new Card(QUEEN, DIAMONDS),
+                new Card(JACK, CLUBS),
+                new Card(TEN, DIAMONDS),
+                new Card(NINE, HEARTS));
 
         assertThat(Hand.from(highStraight).getHandValue()).isEqualTo(STRAIGHT);
         assertThat(Hand.from(highStraight)).isGreaterThan(Hand.from(lowStraight));
@@ -253,19 +253,19 @@ public class HandComparisonTest {
 
     @Test
     public void straightShouldBeEqual() {
-        List<Deck.Card> straight1 = List.of(
-                new Deck.Card(ACE, SPADES),
-                new Deck.Card(KING, CLUBS),
-                new Deck.Card(QUEEN, HEARTS),
-                new Deck.Card(JACK, SPADES),
-                new Deck.Card(TEN, CLUBS));
+        List<Card> straight1 = List.of(
+                new Card(ACE, SPADES),
+                new Card(KING, CLUBS),
+                new Card(QUEEN, HEARTS),
+                new Card(JACK, SPADES),
+                new Card(TEN, CLUBS));
 
-        List<Deck.Card> straight2 = List.of(
-                new Deck.Card(ACE, HEARTS),
-                new Deck.Card(KING, HEARTS),
-                new Deck.Card(QUEEN, DIAMONDS),
-                new Deck.Card(JACK, CLUBS),
-                new Deck.Card(TEN, DIAMONDS));
+        List<Card> straight2 = List.of(
+                new Card(ACE, HEARTS),
+                new Card(KING, HEARTS),
+                new Card(QUEEN, DIAMONDS),
+                new Card(JACK, CLUBS),
+                new Card(TEN, DIAMONDS));
 
         assertThat(Hand.from(straight1).getHandValue()).isEqualTo(STRAIGHT);
         assertThat(Hand.from(straight1)).isEqualTo(Hand.from(straight2));
@@ -273,19 +273,19 @@ public class HandComparisonTest {
 
     @Test
     public void highestThreeOfAKindShouldWin() {
-        List<Deck.Card> highThree = List.of(
-                new Deck.Card(ACE, SPADES),
-                new Deck.Card(ACE, CLUBS),
-                new Deck.Card(ACE, HEARTS),
-                new Deck.Card(TWO, SPADES),
-                new Deck.Card(FOUR, CLUBS));
+        List<Card> highThree = List.of(
+                new Card(ACE, SPADES),
+                new Card(ACE, CLUBS),
+                new Card(ACE, HEARTS),
+                new Card(TWO, SPADES),
+                new Card(FOUR, CLUBS));
 
-        List<Deck.Card> lowThree = List.of(
-                new Deck.Card(KING, HEARTS),
-                new Deck.Card(KING, DIAMONDS),
-                new Deck.Card(KING, CLUBS),
-                new Deck.Card(QUEEN, DIAMONDS),
-                new Deck.Card(FOUR, HEARTS));
+        List<Card> lowThree = List.of(
+                new Card(KING, HEARTS),
+                new Card(KING, DIAMONDS),
+                new Card(KING, CLUBS),
+                new Card(QUEEN, DIAMONDS),
+                new Card(FOUR, HEARTS));
 
         assertThat(Hand.from(highThree).getHandValue()).isEqualTo(THREE_OF_A_KIND);
         assertThat(Hand.from(highThree)).isGreaterThan(Hand.from(lowThree));
@@ -293,19 +293,19 @@ public class HandComparisonTest {
 
     @Test
     public void whenThreeOfAKindEqual_firstKickerShouldWin() {
-        List<Deck.Card> highestKicker = List.of(
-                new Deck.Card(FOUR, SPADES),
-                new Deck.Card(FOUR, CLUBS),
-                new Deck.Card(FOUR, HEARTS),
-                new Deck.Card(ACE, DIAMONDS),
-                new Deck.Card(TWO, SPADES));
+        List<Card> highestKicker = List.of(
+                new Card(FOUR, SPADES),
+                new Card(FOUR, CLUBS),
+                new Card(FOUR, HEARTS),
+                new Card(ACE, DIAMONDS),
+                new Card(TWO, SPADES));
 
-        List<Deck.Card> lowestKicker = List.of(
-                new Deck.Card(FOUR, SPADES),
-                new Deck.Card(FOUR, CLUBS),
-                new Deck.Card(FOUR, HEARTS),
-                new Deck.Card(KING, DIAMONDS),
-                new Deck.Card(THREE, SPADES));
+        List<Card> lowestKicker = List.of(
+                new Card(FOUR, SPADES),
+                new Card(FOUR, CLUBS),
+                new Card(FOUR, HEARTS),
+                new Card(KING, DIAMONDS),
+                new Card(THREE, SPADES));
 
         assertThat(Hand.from(highestKicker).getHandValue()).isEqualTo(THREE_OF_A_KIND);
         assertThat(Hand.from(highestKicker)).isGreaterThan(Hand.from(lowestKicker));
@@ -313,19 +313,19 @@ public class HandComparisonTest {
 
     @Test
     public void whenThreeOfAKindEqual_secondKickerShouldWin() {
-        List<Deck.Card> highestKicker = List.of(
-                new Deck.Card(FOUR, SPADES),
-                new Deck.Card(FOUR, CLUBS),
-                new Deck.Card(FOUR, HEARTS),
-                new Deck.Card(ACE, DIAMONDS),
-                new Deck.Card(THREE, SPADES));
+        List<Card> highestKicker = List.of(
+                new Card(FOUR, SPADES),
+                new Card(FOUR, CLUBS),
+                new Card(FOUR, HEARTS),
+                new Card(ACE, DIAMONDS),
+                new Card(THREE, SPADES));
 
-        List<Deck.Card> lowestKicker = List.of(
-                new Deck.Card(FOUR, SPADES),
-                new Deck.Card(FOUR, CLUBS),
-                new Deck.Card(FOUR, HEARTS),
-                new Deck.Card(ACE, DIAMONDS),
-                new Deck.Card(TWO, SPADES));
+        List<Card> lowestKicker = List.of(
+                new Card(FOUR, SPADES),
+                new Card(FOUR, CLUBS),
+                new Card(FOUR, HEARTS),
+                new Card(ACE, DIAMONDS),
+                new Card(TWO, SPADES));
 
         assertThat(Hand.from(highestKicker).getHandValue()).isEqualTo(THREE_OF_A_KIND);
         assertThat(Hand.from(highestKicker)).isGreaterThan(Hand.from(lowestKicker));
@@ -333,19 +333,19 @@ public class HandComparisonTest {
 
     @Test
     public void threeOfAKindShouldBeEqual() {
-        List<Deck.Card> equalKicker1 = List.of(
-                new Deck.Card(FOUR, SPADES),
-                new Deck.Card(FOUR, CLUBS),
-                new Deck.Card(FOUR, HEARTS),
-                new Deck.Card(ACE, DIAMONDS),
-                new Deck.Card(THREE, SPADES));
+        List<Card> equalKicker1 = List.of(
+                new Card(FOUR, SPADES),
+                new Card(FOUR, CLUBS),
+                new Card(FOUR, HEARTS),
+                new Card(ACE, DIAMONDS),
+                new Card(THREE, SPADES));
 
-        List<Deck.Card> equalKicker2 = List.of(
-                new Deck.Card(FOUR, SPADES),
-                new Deck.Card(FOUR, CLUBS),
-                new Deck.Card(FOUR, HEARTS),
-                new Deck.Card(ACE, HEARTS),
-                new Deck.Card(THREE, HEARTS));
+        List<Card> equalKicker2 = List.of(
+                new Card(FOUR, SPADES),
+                new Card(FOUR, CLUBS),
+                new Card(FOUR, HEARTS),
+                new Card(ACE, HEARTS),
+                new Card(THREE, HEARTS));
 
         assertThat(Hand.from(equalKicker1).getHandValue()).isEqualTo(THREE_OF_A_KIND);
         assertThat(Hand.from(equalKicker1)).isEqualTo(Hand.from(equalKicker2));
@@ -353,19 +353,19 @@ public class HandComparisonTest {
 
     @Test
     public void highestHighPairOfTwoPairShouldWin() {
-        List<Deck.Card> highPairTwoPair = List.of(
-                new Deck.Card(ACE, SPADES),
-                new Deck.Card(ACE, CLUBS),
-                new Deck.Card(TWO, CLUBS),
-                new Deck.Card(TWO, SPADES),
-                new Deck.Card(FOUR, CLUBS));
+        List<Card> highPairTwoPair = List.of(
+                new Card(ACE, SPADES),
+                new Card(ACE, CLUBS),
+                new Card(TWO, CLUBS),
+                new Card(TWO, SPADES),
+                new Card(FOUR, CLUBS));
 
-        List<Deck.Card> lowPairTwoPair = List.of(
-                new Deck.Card(KING, HEARTS),
-                new Deck.Card(KING, DIAMONDS),
-                new Deck.Card(QUEEN, HEARTS),
-                new Deck.Card(QUEEN, DIAMONDS),
-                new Deck.Card(FOUR, HEARTS));
+        List<Card> lowPairTwoPair = List.of(
+                new Card(KING, HEARTS),
+                new Card(KING, DIAMONDS),
+                new Card(QUEEN, HEARTS),
+                new Card(QUEEN, DIAMONDS),
+                new Card(FOUR, HEARTS));
 
         assertThat(Hand.from(highPairTwoPair).getHandValue()).isEqualTo(TWO_PAIR);
         assertThat(Hand.from(highPairTwoPair)).isGreaterThan(Hand.from(lowPairTwoPair));
@@ -373,19 +373,19 @@ public class HandComparisonTest {
 
     @Test
     public void highestLowPairOfTwoPairShouldWin() {
-        List<Deck.Card> lowTwoPair = List.of(
-                new Deck.Card(ACE, SPADES),
-                new Deck.Card(ACE, CLUBS),
-                new Deck.Card(TWO, CLUBS),
-                new Deck.Card(TWO, SPADES),
-                new Deck.Card(FOUR, CLUBS));
+        List<Card> lowTwoPair = List.of(
+                new Card(ACE, SPADES),
+                new Card(ACE, CLUBS),
+                new Card(TWO, CLUBS),
+                new Card(TWO, SPADES),
+                new Card(FOUR, CLUBS));
 
-        List<Deck.Card> highTwoPair = List.of(
-                new Deck.Card(ACE, HEARTS),
-                new Deck.Card(ACE, DIAMONDS),
-                new Deck.Card(QUEEN, HEARTS),
-                new Deck.Card(QUEEN, DIAMONDS),
-                new Deck.Card(FOUR, HEARTS));
+        List<Card> highTwoPair = List.of(
+                new Card(ACE, HEARTS),
+                new Card(ACE, DIAMONDS),
+                new Card(QUEEN, HEARTS),
+                new Card(QUEEN, DIAMONDS),
+                new Card(FOUR, HEARTS));
 
         assertThat(Hand.from(highTwoPair).getHandValue()).isEqualTo(TWO_PAIR);
         assertThat(Hand.from(highTwoPair)).isGreaterThan(Hand.from(lowTwoPair));
@@ -393,19 +393,19 @@ public class HandComparisonTest {
 
     @Test
     public void whenTwoPairEqual_kickerShouldWin() {
-        List<Deck.Card> lowKicker = List.of(
-                new Deck.Card(ACE, SPADES),
-                new Deck.Card(ACE, CLUBS),
-                new Deck.Card(QUEEN, CLUBS),
-                new Deck.Card(QUEEN, SPADES),
-                new Deck.Card(FOUR, CLUBS));
+        List<Card> lowKicker = List.of(
+                new Card(ACE, SPADES),
+                new Card(ACE, CLUBS),
+                new Card(QUEEN, CLUBS),
+                new Card(QUEEN, SPADES),
+                new Card(FOUR, CLUBS));
 
-        List<Deck.Card> highKicker = List.of(
-                new Deck.Card(ACE, HEARTS),
-                new Deck.Card(ACE, DIAMONDS),
-                new Deck.Card(QUEEN, HEARTS),
-                new Deck.Card(QUEEN, DIAMONDS),
-                new Deck.Card(FIVE, HEARTS));
+        List<Card> highKicker = List.of(
+                new Card(ACE, HEARTS),
+                new Card(ACE, DIAMONDS),
+                new Card(QUEEN, HEARTS),
+                new Card(QUEEN, DIAMONDS),
+                new Card(FIVE, HEARTS));
 
         assertThat(Hand.from(highKicker).getHandValue()).isEqualTo(TWO_PAIR);
         assertThat(Hand.from(highKicker)).isGreaterThan(Hand.from(lowKicker));
@@ -413,19 +413,19 @@ public class HandComparisonTest {
 
     @Test
     public void twoPairShouldBeEqual() {
-        List<Deck.Card> equalKicker1 = List.of(
-                new Deck.Card(ACE, SPADES),
-                new Deck.Card(ACE, CLUBS),
-                new Deck.Card(QUEEN, CLUBS),
-                new Deck.Card(QUEEN, SPADES),
-                new Deck.Card(FIVE, CLUBS));
+        List<Card> equalKicker1 = List.of(
+                new Card(ACE, SPADES),
+                new Card(ACE, CLUBS),
+                new Card(QUEEN, CLUBS),
+                new Card(QUEEN, SPADES),
+                new Card(FIVE, CLUBS));
 
-        List<Deck.Card> equalKicker2 = List.of(
-                new Deck.Card(ACE, HEARTS),
-                new Deck.Card(ACE, DIAMONDS),
-                new Deck.Card(QUEEN, HEARTS),
-                new Deck.Card(QUEEN, DIAMONDS),
-                new Deck.Card(FIVE, HEARTS));
+        List<Card> equalKicker2 = List.of(
+                new Card(ACE, HEARTS),
+                new Card(ACE, DIAMONDS),
+                new Card(QUEEN, HEARTS),
+                new Card(QUEEN, DIAMONDS),
+                new Card(FIVE, HEARTS));
 
         assertThat(Hand.from(equalKicker1).getHandValue()).isEqualTo(TWO_PAIR);
         assertThat(Hand.from(equalKicker1)).isEqualTo(Hand.from(equalKicker2));
@@ -433,19 +433,19 @@ public class HandComparisonTest {
 
     @Test
     public void higherPairShouldWin() {
-        List<Deck.Card> highPair = List.of(
-                new Deck.Card(ACE, SPADES),
-                new Deck.Card(ACE, CLUBS),
-                new Deck.Card(TWO, CLUBS),
-                new Deck.Card(THREE, CLUBS),
-                new Deck.Card(FOUR, CLUBS));
+        List<Card> highPair = List.of(
+                new Card(ACE, SPADES),
+                new Card(ACE, CLUBS),
+                new Card(TWO, CLUBS),
+                new Card(THREE, CLUBS),
+                new Card(FOUR, CLUBS));
 
-        List<Deck.Card> lowPair = List.of(
-                new Deck.Card(ACE, HEARTS),
-                new Deck.Card(TWO, DIAMONDS),
-                new Deck.Card(TWO, HEARTS),
-                new Deck.Card(THREE, HEARTS),
-                new Deck.Card(FOUR, DIAMONDS));
+        List<Card> lowPair = List.of(
+                new Card(ACE, HEARTS),
+                new Card(TWO, DIAMONDS),
+                new Card(TWO, HEARTS),
+                new Card(THREE, HEARTS),
+                new Card(FOUR, DIAMONDS));
 
         assertThat(Hand.from(highPair).getHandValue()).isEqualTo(ONE_PAIR);
         assertThat(Hand.from(highPair)).isGreaterThan(Hand.from(lowPair));
@@ -453,19 +453,19 @@ public class HandComparisonTest {
 
     @Test
     public void whenPairEqual_kickerShouldWin() {
-        List<Deck.Card> lowKicker = List.of(
-                new Deck.Card(ACE, SPADES),
-                new Deck.Card(ACE, CLUBS),
-                new Deck.Card(TWO, CLUBS),
-                new Deck.Card(THREE, CLUBS),
-                new Deck.Card(FOUR, CLUBS));
+        List<Card> lowKicker = List.of(
+                new Card(ACE, SPADES),
+                new Card(ACE, CLUBS),
+                new Card(TWO, CLUBS),
+                new Card(THREE, CLUBS),
+                new Card(FOUR, CLUBS));
 
-        List<Deck.Card> highKicker = List.of(
-                new Deck.Card(ACE, HEARTS),
-                new Deck.Card(ACE, DIAMONDS),
-                new Deck.Card(KING, CLUBS),
-                new Deck.Card(THREE, HEARTS),
-                new Deck.Card(FOUR, HEARTS));
+        List<Card> highKicker = List.of(
+                new Card(ACE, HEARTS),
+                new Card(ACE, DIAMONDS),
+                new Card(KING, CLUBS),
+                new Card(THREE, HEARTS),
+                new Card(FOUR, HEARTS));
 
         assertThat(Hand.from(highKicker).getHandValue()).isEqualTo(ONE_PAIR);
         assertThat(Hand.from(highKicker)).isGreaterThan(Hand.from(lowKicker));
@@ -473,19 +473,19 @@ public class HandComparisonTest {
 
     @Test
     public void whenPairEqual_kickerThreeShouldWin() {
-        List<Deck.Card> lowKicker = List.of(
-                new Deck.Card(ACE, SPADES),
-                new Deck.Card(ACE, CLUBS),
-                new Deck.Card(KING, HEARTS),
-                new Deck.Card(QUEEN, CLUBS),
-                new Deck.Card(TWO, CLUBS));
+        List<Card> lowKicker = List.of(
+                new Card(ACE, SPADES),
+                new Card(ACE, CLUBS),
+                new Card(KING, HEARTS),
+                new Card(QUEEN, CLUBS),
+                new Card(TWO, CLUBS));
 
-        List<Deck.Card> highKicker = List.of(
-                new Deck.Card(ACE, HEARTS),
-                new Deck.Card(ACE, DIAMONDS),
-                new Deck.Card(KING, CLUBS),
-                new Deck.Card(QUEEN, HEARTS),
-                new Deck.Card(THREE, HEARTS));
+        List<Card> highKicker = List.of(
+                new Card(ACE, HEARTS),
+                new Card(ACE, DIAMONDS),
+                new Card(KING, CLUBS),
+                new Card(QUEEN, HEARTS),
+                new Card(THREE, HEARTS));
 
         assertThat(Hand.from(highKicker).getHandValue()).isEqualTo(ONE_PAIR);
         assertThat(Hand.from(highKicker)).isGreaterThan(Hand.from(lowKicker));
@@ -493,19 +493,19 @@ public class HandComparisonTest {
 
     @Test
     public void pairShouldBeEqual() {
-        List<Deck.Card> equalKicker1 = List.of(
-                new Deck.Card(ACE, SPADES),
-                new Deck.Card(ACE, CLUBS),
-                new Deck.Card(KING, HEARTS),
-                new Deck.Card(THREE, CLUBS),
-                new Deck.Card(FOUR, CLUBS));
+        List<Card> equalKicker1 = List.of(
+                new Card(ACE, SPADES),
+                new Card(ACE, CLUBS),
+                new Card(KING, HEARTS),
+                new Card(THREE, CLUBS),
+                new Card(FOUR, CLUBS));
 
-        List<Deck.Card> equalKicker2 = List.of(
-                new Deck.Card(ACE, HEARTS),
-                new Deck.Card(ACE, DIAMONDS),
-                new Deck.Card(KING, CLUBS),
-                new Deck.Card(THREE, HEARTS),
-                new Deck.Card(FOUR, HEARTS));
+        List<Card> equalKicker2 = List.of(
+                new Card(ACE, HEARTS),
+                new Card(ACE, DIAMONDS),
+                new Card(KING, CLUBS),
+                new Card(THREE, HEARTS),
+                new Card(FOUR, HEARTS));
 
         assertThat(Hand.from(equalKicker1).getHandValue()).isEqualTo(ONE_PAIR);
         assertThat(Hand.from(equalKicker1)).isEqualTo(Hand.from(equalKicker2));

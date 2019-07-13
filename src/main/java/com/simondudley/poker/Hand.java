@@ -4,10 +4,11 @@ import com.google.common.collect.Lists;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static com.simondudley.poker.Hand.HandValue.*;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
+import static com.simondudley.poker.Hand.HandValue.*;
+import static com.simondudley.poker.Card.Rank;
+import static com.simondudley.poker.Card.Suit;
 
 public class Hand implements Comparable<Hand> {
 
@@ -39,9 +40,9 @@ public class Hand implements Comparable<Hand> {
 
     private transient Comparator<HandValue> handValueComparator = Comparator.comparingInt(HandValue::getValue);
     private final HandValue handValue;
-    private final List<Deck.Card> cards;
+    private final List<Card> cards;
 
-    public Hand(HandValue handValue, List<Deck.Card> cards) {
+    public Hand(HandValue handValue, List<Card> cards) {
         this.handValue = handValue;
         this.cards = Lists.reverse(cards.stream().sorted().collect(toList()));
     }
@@ -50,28 +51,28 @@ public class Hand implements Comparable<Hand> {
         return handValue;
     }
 
-    public static Hand from(List<Deck.Card> hand) {
+    public static Hand from(List<Card> hand) {
 //        System.out.println();
 
         // of a kind...
-        Map<Deck.Rank, List<Deck.Card>> byRank = hand.stream().collect(groupingBy(c -> c.rank));
-        Map<Deck.Rank, Integer> sizeByRank = byRank.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().size()));
-        List<Map.Entry<Deck.Rank, Integer>> sortedRankOccurrences = sizeByRank.entrySet().stream()
+        Map<Rank, List<Card>> byRank = hand.stream().collect(groupingBy(c -> c.rank));
+        Map<Rank, Integer> sizeByRank = byRank.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().size()));
+        List<Map.Entry<Rank, Integer>> sortedRankOccurrences = sizeByRank.entrySet().stream()
                 .sorted(Comparator.comparingInt(Map.Entry::getValue))
                 .collect(toList());
         Collections.reverse(sortedRankOccurrences);
-        Map.Entry<Deck.Rank, Integer> maxOccurrence = sortedRankOccurrences.get(0);
-        Map.Entry<Deck.Rank, Integer> secondOccurrence = sortedRankOccurrences.get(1);
+        Map.Entry<Rank, Integer> maxOccurrence = sortedRankOccurrences.get(0);
+        Map.Entry<Rank, Integer> secondOccurrence = sortedRankOccurrences.get(1);
 
         // Flush
-        Map<Deck.Suit, List<Deck.Card>> bySuit = hand.stream().collect(groupingBy(c -> c.suit));
-        Optional<Map.Entry<Deck.Suit, List<Deck.Card>>> flush = bySuit.entrySet().stream().filter(e -> e.getValue().size() == HAND_SIZE).findFirst();
+        Map<Suit, List<Card>> bySuit = hand.stream().collect(groupingBy(c -> c.suit));
+        Optional<Map.Entry<Suit, List<Card>>> flush = bySuit.entrySet().stream().filter(e -> e.getValue().size() == HAND_SIZE).findFirst();
 
         // straights
-        List<Deck.Rank> sorted = hand.stream().map(e -> e.rank).sorted(Comparator.comparingInt(Deck.Rank::getValue)).collect(toList());
+        List<Rank> sorted = hand.stream().map(e -> e.rank).sorted(Comparator.comparingInt(Rank::getValue)).collect(toList());
         Collections.reverse(sorted);
 //        sorted.stream().map(r -> r.getValue()).reduce(true, (isConsecutive, rankValue) -> , (a, b) -> a - 1 == b)
-        List<Integer> sortedRankValues = sorted.stream().mapToInt(Deck.Rank::getValue).boxed().collect(toList());
+        List<Integer> sortedRankValues = sorted.stream().mapToInt(Rank::getValue).boxed().collect(toList());
         boolean isConsecutive = true;
         Integer previous = null;
         for (Integer rankValue : sortedRankValues) {
@@ -110,31 +111,31 @@ public class Hand implements Comparable<Hand> {
         if (this.handValue.equals(o.handValue)) {
 
             if (FULL_HOUSE.equals(handValue)) {
-                Map<Deck.Rank, List<Deck.Card>> byRank = cards.stream().collect(groupingBy(c -> c.rank));
-                Map<Deck.Rank, List<Deck.Card>> byRankOther = o.cards.stream().collect(groupingBy(c -> c.rank));
+                Map<Rank, List<Card>> byRank = cards.stream().collect(groupingBy(c -> c.rank));
+                Map<Rank, List<Card>> byRankOther = o.cards.stream().collect(groupingBy(c -> c.rank));
 
                 // compare three of a kind
-                List<Map.Entry<Deck.Rank, List<Deck.Card>>> threes = byRank.entrySet().stream().filter(e -> e.getValue().size() == 3).collect(toList());
-                List<Map.Entry<Deck.Rank, List<Deck.Card>>> threesOther = byRankOther.entrySet().stream().filter(e -> e.getValue().size() == 3).collect(toList());
-                Deck.Rank threesRank = threes.get(0).getKey();
-                Deck.Rank threesRankOther = threesOther.get(0).getKey();
+                List<Map.Entry<Rank, List<Card>>> threes = byRank.entrySet().stream().filter(e -> e.getValue().size() == 3).collect(toList());
+                List<Map.Entry<Rank, List<Card>>> threesOther = byRankOther.entrySet().stream().filter(e -> e.getValue().size() == 3).collect(toList());
+                Rank threesRank = threes.get(0).getKey();
+                Rank threesRankOther = threesOther.get(0).getKey();
                 if (!threesRank.equals(threesRankOther)) {
                     return threesRank.compareTo(threesRankOther);
                 }
 
                 // compare pair
-                List<Map.Entry<Deck.Rank, List<Deck.Card>>> pair = byRank.entrySet().stream().filter(e -> e.getValue().size() == 2).collect(toList());
-                List<Map.Entry<Deck.Rank, List<Deck.Card>>> pairOther = byRankOther.entrySet().stream().filter(e -> e.getValue().size() == 2).collect(toList());
-                Deck.Rank pairRank = pair.get(0).getKey();
-                Deck.Rank pairRankOther = pairOther.get(0).getKey();
+                List<Map.Entry<Rank, List<Card>>> pair = byRank.entrySet().stream().filter(e -> e.getValue().size() == 2).collect(toList());
+                List<Map.Entry<Rank, List<Card>>> pairOther = byRankOther.entrySet().stream().filter(e -> e.getValue().size() == 2).collect(toList());
+                Rank pairRank = pair.get(0).getKey();
+                Rank pairRankOther = pairOther.get(0).getKey();
                 return pairRank.compareTo(pairRankOther);
             }
 
             // assumes cards are sorted in reverse order
             // compare highest ranks in hand, individually
-            Iterator<Deck.Card> otherator = o.cards.iterator();
-            for (Deck.Card highCard : this.cards) {
-                Deck.Card otherHighCard = otherator.next();
+            Iterator<Card> otherator = o.cards.iterator();
+            for (Card highCard : this.cards) {
+                Card otherHighCard = otherator.next();
                 if (!highCard.rank.equals(otherHighCard.rank)) {
                     return highCard.rank.compareTo(otherHighCard.rank);
                 } // else continue
@@ -157,16 +158,15 @@ public class Hand implements Comparable<Hand> {
         if (!(o instanceof Hand)) return false;
         Hand other = (Hand) o;
 
-        boolean equalRanks = true;
-        Iterator<Deck.Card> otherator = other.cards.iterator();
-        for (Deck.Card highCard : this.cards) {
-            Deck.Card otherHighCard = otherator.next();
+        Iterator<Card> otherator = other.cards.iterator();
+        for (Card highCard : this.cards) {
+            Card otherHighCard = otherator.next();
             if (!highCard.rank.equals(otherHighCard.rank)) {
                 return false;
             } // else continue
         }
 
-        return handValue == other.handValue && equalRanks;
+        return handValue == other.handValue;
     }
 
     @Override

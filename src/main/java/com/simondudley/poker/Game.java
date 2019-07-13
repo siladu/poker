@@ -22,14 +22,14 @@ public class Game {
 
         players.forEach(System.out::println);
 
-        List<Deck.Card> board;
-        List<Deck.Card> flop = deck.removeOptional(3);
+        List<Card> board;
+        List<Card> flop = deck.removeOptional(3);
         System.out.println("FLOP: " + flop);
         board = flop;
-        Deck.Card turn = deck.remove();
+        Card turn = deck.remove();
         System.out.println("TURN: " + turn);
         board.add(turn);
-        Deck.Card river = deck.remove();
+        Card river = deck.remove();
         System.out.println("RIVER: " + river);
         board.add(river);
         System.out.println("BOARD: " + board);
@@ -43,9 +43,9 @@ public class Game {
         System.out.println("WINNER = " + winner.get());
     }
 
-    private Hand bestHandFor(Player player, List<Deck.Card> board) {
+    private Hand bestHandFor(Player player, List<Card> board) {
 
-        Set<Deck.Card> handSuperset =
+        Set<Card> handSuperset =
             Stream.of(player.pocket, board)
                     .flatMap(Collection::stream)
                     .collect(toSet());
@@ -53,7 +53,7 @@ public class Game {
         System.out.println(String.format("[PLAYER %s] Superset = %s", player.id, handSuperset));
 
         // combinations of 5
-        Set<Set<Deck.Card>> combinations = Sets.combinations(handSuperset, 5);
+        Set<Set<Card>> combinations = Sets.combinations(handSuperset, 5);
         List<Hand> hands = combinations.stream().map(ArrayList::new).map(Hand::from).collect(toList());
         Optional<Hand> bestHand = hands.stream().max(Comparator.naturalOrder());
         System.out.println(String.format("[PLAYER %s] Best Hand = %s", player.id, bestHand.get()));
@@ -82,7 +82,7 @@ public class Game {
     public static class Player {
 
         int id;
-        List<Deck.Card> pocket;
+        List<Card> pocket;
 
         Player(int id) {
             this.id = id;

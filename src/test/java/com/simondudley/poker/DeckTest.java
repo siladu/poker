@@ -18,7 +18,7 @@ public class DeckTest {
         assertThat(deck.size()).isEqualTo(52);
 
         IntStream.rangeClosed(1, 52).forEach((i) -> {
-            Optional<Deck.Card> card = deck.removeOptional();
+            Optional<Card> card = deck.removeOptional();
             assertThat(card).isPresent();
         });
 
@@ -29,11 +29,11 @@ public class DeckTest {
     @Test
     public void shouldRemoveMultipleCardsUntilEmpty() {
         Deck deck = Deck.newInstance();
-        List<Deck.Card> twoRemoved = deck.removeOptional(2);
+        List<Card> twoRemoved = deck.removeOptional(2);
         assertThat(twoRemoved).hasSize(2);
         assertThat(deck.size()).isEqualTo(50);
 
-        List<Deck.Card> removed = deck.removeOptional(51);
+        List<Card> removed = deck.removeOptional(51);
         assertThat(removed).hasSize(50);
         assertThat(deck.size()).isEqualTo(0);
     }

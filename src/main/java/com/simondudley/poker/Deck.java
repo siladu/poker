@@ -36,21 +36,31 @@ public class Deck {
         }
     }
 
-    public Set<Card> remove(int n) {
+    public List<Card> removeOptional(int n) {
 
-        Set<Card> removed = new HashSet<>();
+        List<Card> removed = new ArrayList<>();
 
         for (int i = 0; i < Math.min(n, SIZE); i++) {
-            remove().ifPresent(removed::add);
+            removeOptional().ifPresent(removed::add);
         }
 
         return removed;
     }
 
-    public Optional<Card> remove() {
+    public Optional<Card> removeOptional() {
         Optional<Card> first = cards.stream().findFirst();
         first.ifPresent(cards::remove);
         return first;
+    }
+
+    public Card remove() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("Cannot remove from empty deck");
+        }
+
+        Card card = cards.stream().findFirst().get();
+        cards.remove(card);
+        return card;
     }
 
     public int size() {

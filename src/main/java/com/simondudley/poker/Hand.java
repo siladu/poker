@@ -3,6 +3,7 @@ package com.simondudley.poker;
 import com.google.common.collect.Lists;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 import static com.simondudley.poker.Card.Rank;
 import static com.simondudley.poker.Card.Suit;
@@ -36,7 +37,6 @@ class Hand implements Comparable<Hand> {
         static final Comparator<HandValue> HAND_VALUE_COMPARATOR = Comparator.comparingInt(HandValue::getValue);
     }
 
-    private static final int HAND_SIZE = 5;
     private final HandValue handValue;
     private final List<Card> cards;
 
@@ -93,8 +93,7 @@ class Hand implements Comparable<Hand> {
     }
 
     private static boolean isFlush(List<Card> hand) {
-        Map<Suit, List<Card>> bySuit = hand.stream().collect(groupingBy(c -> c.suit));
-        return bySuit.entrySet().stream().anyMatch(e -> e.getValue().size() == HAND_SIZE);
+        return Stream.of(Suit.values()).anyMatch(suit -> hand.stream().allMatch(card -> card.suit.equals(suit)));
     }
 
     private static boolean isConsecutive(List<Card> hand) {

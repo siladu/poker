@@ -11,7 +11,7 @@ import static java.util.stream.Collectors.*;
 
 class Hand implements Comparable<Hand> {
 
-    enum HandValue implements Comparable<HandValue> {
+    enum HandValue {
 
         STRAIGHT_FLUSH(9), // Royal = Ace high,
         FOUR_OF_A_KIND(8),
@@ -50,22 +50,54 @@ class Hand implements Comparable<Hand> {
     }
 
     static Hand from(List<Card> hand) {
-//        System.out.println();
+        return new Hand(determineHandValue(hand), hand);
+    }
+
+    private static HandValue determineHandValue(List<Card> hand) {
+        if (hand.size() != 5) {
+            throw new IllegalArgumentException("There must be five cards in yo' hand");
+        }
 
         // of a kind...
         Map<Rank, List<Card>> byRank = hand.stream().collect(groupingBy(c -> c.rank));
         Map<Rank, Integer> sizeByRank = byRank.entrySet().stream().collect(toMap(Map.Entry::getKey, e -> e.getValue().size()));
-        List<Map.Entry<Rank, Integer>> sortedRankOccurrences = sizeByRank.entrySet().stream()
-                .sorted(Comparator.comparingInt(Map.Entry::getValue))
-                .collect(toList());
-        Collections.reverse(sortedRankOccurrences);
-        Map.Entry<Rank, Integer> maxOccurrence = sortedRankOccurrences.get(0);
-        Map.Entry<Rank, Integer> secondOccurrence = sortedRankOccurrences.get(1);
+        List<Map.Entry<Rank, Integer>> sortedRankOccurrences = Lists.reverse(
+                sizeByRank.entrySet().stream()
+                        .sorted(Comparator.comparingInt(Map.Entry::getValue))
+                        .collect(toList())
+        );
+        int primaryRankFrequency = sortedRankOccurrences.get(0).getValue();
+        boolean hasSecondaryPair = sortedRankOccurrences.get(1).getValue() == 2;
 
-        // Flush
+        HandValue handValue;
+        if (isFlush(hand) && isConsecutive(hand)) {
+            handValue = STRAIGHT_FLUSH; // highest in hand wins
+        } else if (primaryRankFrequency == 4) {
+            handValue = FOUR_OF_A_KIND; // highest in hand wins; if four of a kind on the board, then kicker
+        } else if (primaryRankFrequency == 3 && hasSecondaryPair) {
+            handValue = FULL_HOUSE; // highest three wins, then highest pair, then kicker
+        } else if (isFlush(hand)) {
+            handValue = FLUSH; // highest non-equal rank card wins (even if it's the lowest in the flush)
+        } else if (isConsecutive(hand)) {
+            handValue = STRAIGHT; // highest in hand wins, straight on board - split pot unless
+        } else if (primaryRankFrequency == 3) {
+            handValue = THREE_OF_A_KIND; // highest in hand wins
+        } else if (primaryRankFrequency == 2 && hasSecondaryPair) {
+            handValue = TWO_PAIR; // highest pair wins, then highest second pair, then kicker
+        } else if (primaryRankFrequency == 2) {
+            handValue = ONE_PAIR; // highest in hand, if equal then kicker
+        } else {
+            handValue = HIGH_CARD; // highest in hand, check next card
+        }
+        return handValue;
+    }
+
+    private static boolean isFlush(List<Card> hand) {
         Map<Suit, List<Card>> bySuit = hand.stream().collect(groupingBy(c -> c.suit));
-        Optional<Map.Entry<Suit, List<Card>>> flush = bySuit.entrySet().stream().filter(e -> e.getValue().size() == HAND_SIZE).findFirst();
+        return bySuit.entrySet().stream().anyMatch(e -> e.getValue().size() == HAND_SIZE);
+    }
 
+    private static boolean isConsecutive(List<Card> hand) {
         // straights
         List<Rank> sorted = hand.stream().map(e -> e.rank).sorted(Comparator.comparingInt(Rank::getValue)).collect(toList());
         Collections.reverse(sorted);
@@ -76,34 +108,14 @@ class Hand implements Comparable<Hand> {
         for (Integer rankValue : sortedRankValues) {
             if (previous != null) {
                 isConsecutive = ((previous - 1) == rankValue);
-                if (!isConsecutive)
+                if (!isConsecutive) {
                     break;
+                }
             }
             previous = rankValue;
         }
 //        Streams.forEachPair();
-
-        HandValue handValue;
-        if (flush.isPresent() && isConsecutive) {
-            handValue = STRAIGHT_FLUSH; // highest in hand wins
-        } else if (maxOccurrence.getValue() == 4) {
-            handValue = FOUR_OF_A_KIND; // highest in hand wins; if four of a kind on the board, then kicker
-        } else if (maxOccurrence.getValue() == 3 && secondOccurrence.getValue() == 2) {
-            handValue = FULL_HOUSE; // highest three wins, then highest pair, then kicker
-        } else if (flush.isPresent()) {
-            handValue = FLUSH; // highest non-equal rank card wins (even if it's the lowest in the flush)
-        } else if (isConsecutive) {
-            handValue = STRAIGHT; // highest in hand wins, straight on board - split pot unless
-        } else if (maxOccurrence.getValue() == 3) {
-            handValue = THREE_OF_A_KIND; // highest in hand wins
-        } else if (maxOccurrence.getValue() == 2 && secondOccurrence.getValue() == 2) {
-            handValue = TWO_PAIR; // highest pair wins, then highest second pair, then kicker
-        } else if (maxOccurrence.getValue() == 2) {
-            handValue = ONE_PAIR; // highest in hand, if equal then kicker
-        } else {
-            handValue = HIGH_CARD; // highest in hand, check next card
-        }
-        return new Hand(handValue, hand);
+        return isConsecutive;
     }
 
     @Override

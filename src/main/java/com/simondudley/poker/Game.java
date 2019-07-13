@@ -35,12 +35,18 @@ class Game {
         System.out.println("BOARD: " + board);
 
         // determine winner
+        determineWinners(players, board);
+    }
+
+    Map<Player, Hand> determineWinners(List<Player> players, List<Card> board) {
         Map<Player, Hand> playersBestHands = new HashMap<>();
         for (Player player : players) {
             playersBestHands.put(player, bestHandFor(player, board));
         }
-        Optional<Map.Entry<Player, Hand>> winner = playersBestHands.entrySet().stream().max(Comparator.comparing(e -> e.getValue()));
+        Optional<Map.Entry<Player, Hand>> winner = playersBestHands.entrySet().stream().max(Comparator.comparing(Map.Entry::getValue));
         System.out.println("WINNER = " + winner.get());
+        Map<Player, Hand> winners = Map.ofEntries(winner.get());
+        return winners;
     }
 
     private Hand bestHandFor(Player player, List<Card> board) {
@@ -86,6 +92,11 @@ class Game {
 
         Player(int id) {
             this.id = id;
+        }
+
+        Player(int id, List<Card> pocket) {
+            this.id = id;
+            this.pocket = pocket;
         }
 
         @Override

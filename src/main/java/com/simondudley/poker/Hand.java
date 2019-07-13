@@ -33,12 +33,12 @@ class Hand implements Comparable<Hand> {
         int getValue() {
             return value;
         }
+
+        static final Comparator<HandValue> HAND_VALUE_COMPARATOR = Comparator.comparingInt(HandValue::getValue);
     }
 
 
     private static final int HAND_SIZE = 5;
-
-    private transient Comparator<HandValue> handValueComparator = Comparator.comparingInt(HandValue::getValue);
     private final HandValue handValue;
     private final List<Card> cards;
 
@@ -143,7 +143,7 @@ class Hand implements Comparable<Hand> {
 
             return 0; // then they must be equal
         } else {
-            return handValueComparator.compare(this.handValue, o.handValue);
+            return HAND_VALUE_COMPARATOR.compare(this.handValue, o.handValue);
         }
     }
 

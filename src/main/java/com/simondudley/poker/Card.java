@@ -2,12 +2,12 @@ package com.simondudley.poker;
 
 import java.util.Objects;
 
-public class Card implements Comparable<Card> {
+class Card implements Comparable<Card> {
 
-    public Rank rank;
-    public Suit suit;
+    Rank rank;
+    Suit suit;
 
-    public Card(Rank rank, Suit suit) {
+    Card(Rank rank, Suit suit) {
         this.rank = rank;
         this.suit = suit;
     }
@@ -60,7 +60,7 @@ public class Card implements Comparable<Card> {
             this.symbol = symbol;
         }
 
-        public int getValue() {
+        int getValue() {
             return value;
         }
     }

@@ -10,7 +10,7 @@ import static com.simondudley.poker.Hand.HandValue.*;
 import static com.simondudley.poker.Card.Rank;
 import static com.simondudley.poker.Card.Suit;
 
-public class Hand implements Comparable<Hand> {
+class Hand implements Comparable<Hand> {
 
     enum HandValue implements Comparable<HandValue> {
 
@@ -30,7 +30,7 @@ public class Hand implements Comparable<Hand> {
             this.value = value;
         }
 
-        public int getValue() {
+        int getValue() {
             return value;
         }
     }
@@ -42,16 +42,16 @@ public class Hand implements Comparable<Hand> {
     private final HandValue handValue;
     private final List<Card> cards;
 
-    public Hand(HandValue handValue, List<Card> cards) {
+    Hand(HandValue handValue, List<Card> cards) {
         this.handValue = handValue;
         this.cards = Lists.reverse(cards.stream().sorted().collect(toList()));
     }
 
-    public HandValue getHandValue() {
+    HandValue getHandValue() {
         return handValue;
     }
 
-    public static Hand from(List<Card> hand) {
+    static Hand from(List<Card> hand) {
 //        System.out.println();
 
         // of a kind...

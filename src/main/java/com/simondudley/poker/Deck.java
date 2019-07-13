@@ -7,17 +7,17 @@ import java.util.Optional;
 import static com.simondudley.poker.Card.Rank;
 import static com.simondudley.poker.Card.Suit;
 
-public class Deck {
+class Deck {
 
     private static final int SIZE = 52;
 
     private List<Card> cards;
 
-    public void shuffle() {
+    void shuffle() {
         Collections.shuffle(cards);
     }
 
-    public static Deck newInstance() {
+    static Deck newInstance() {
         List<Card> cards = new ArrayList<>();
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
@@ -27,7 +27,7 @@ public class Deck {
         return new Deck(cards);
     }
 
-    public static Deck emptyDeck() {
+    static Deck emptyDeck() {
         return new Deck(new ArrayList<>());
     }
 
@@ -35,13 +35,13 @@ public class Deck {
         this.cards = cards;
     }
 
-    public void add(Card card) {
+    void add(Card card) {
         if (!cards.contains(card)) {
             cards.add(card);
         }
     }
 
-    public List<Card> removeOptional(int n) {
+    List<Card> removeOptional(int n) {
 
         List<Card> removed = new ArrayList<>();
 
@@ -52,13 +52,13 @@ public class Deck {
         return removed;
     }
 
-    public Optional<Card> removeOptional() {
+    Optional<Card> removeOptional() {
         Optional<Card> first = cards.stream().findFirst();
         first.ifPresent(cards::remove);
         return first;
     }
 
-    public Card remove() {
+    Card remove() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("Cannot remove from empty deck");
         }
@@ -68,11 +68,11 @@ public class Deck {
         return card;
     }
 
-    public int size() {
+    int size() {
         return cards.size();
     }
 
-    public boolean isEmpty() {
+    boolean isEmpty() {
         return cards.size() == 0;
     }
 

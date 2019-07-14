@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 import static com.simondudley.poker.Card.Rank;
 import static com.simondudley.poker.Card.Suit;
 import static com.simondudley.poker.Hand.HandValue.*;
-import static java.util.Comparator.comparingInt;
+import static java.util.Comparator.*;
 import static java.util.stream.Collectors.*;
 
 class Hand implements Comparable<Hand> {
@@ -100,10 +100,11 @@ class Hand implements Comparable<Hand> {
     private static boolean isStraight(List<Card> hand) {
         List<Integer> sortedRankValues = hand.stream()
                 .map(e -> e.rank.getValue())
+                .sorted()
                 .collect(toList());
 
         for (int i = 1; i < sortedRankValues.size(); i++) {
-            if (sortedRankValues.get(i - 1) != sortedRankValues.get(i) + 1) {
+            if (sortedRankValues.get(i - 1) != sortedRankValues.get(i) - 1) {
                 return false;
             }
         }

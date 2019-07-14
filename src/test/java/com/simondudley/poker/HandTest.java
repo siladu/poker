@@ -51,8 +51,8 @@ public class HandTest {
     public void shouldBeStraight() {
         List<Card> hand = List.of(
                 new Card(ACE, SPADES),
-                new Card(KING, CLUBS),
                 new Card(QUEEN, HEARTS),
+                new Card(KING, CLUBS),
                 new Card(JACK, HEARTS),
                 new Card(TEN, CLUBS)
         );

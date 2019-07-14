@@ -235,15 +235,15 @@ public class HandComparisonTest {
     public void highestStraightShouldWin() {
         List<Card> highStraight = List.of(
                 new Card(ACE, SPADES),
-                new Card(KING, CLUBS),
                 new Card(QUEEN, HEARTS),
+                new Card(KING, CLUBS),
                 new Card(JACK, SPADES),
                 new Card(TEN, CLUBS));
 
         List<Card> lowStraight = List.of(
                 new Card(KING, HEARTS),
-                new Card(QUEEN, DIAMONDS),
                 new Card(JACK, CLUBS),
+                new Card(QUEEN, DIAMONDS),
                 new Card(TEN, DIAMONDS),
                 new Card(NINE, HEARTS));
 

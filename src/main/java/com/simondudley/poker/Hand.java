@@ -72,7 +72,7 @@ class Hand implements Comparable<Hand> {
     }
 
     private static List<Integer> getRankFrequencies(List<Card> hand) {
-        Map<Rank, Long> frequencyByRank = hand.stream().collect(groupingBy(c -> c.rank, counting()));
+        Map<Rank, Long> frequencyByRank = hand.stream().collect(groupingBy(c -> c.rank, () -> new EnumMap<>(Rank.class), counting()));
         return frequencyByRank.values().stream().map(Long::intValue).collect(toList());
     }
 
@@ -125,8 +125,8 @@ class Hand implements Comparable<Hand> {
     }
 
     private int compareFullHouse(Hand o) {
-        Map<Rank, List<Card>> byRank = cards.stream().collect(groupingBy(c -> c.rank));
-        Map<Rank, List<Card>> byRankOther = o.cards.stream().collect(groupingBy(c -> c.rank));
+        Map<Rank, List<Card>> byRank = cards.stream().collect(groupingBy(c -> c.rank, () -> new EnumMap<>(Rank.class), toList()));
+        Map<Rank, List<Card>> byRankOther = o.cards.stream().collect(groupingBy(c -> c.rank, () -> new EnumMap<>(Rank.class), toList()));
 
         // compare three of a kind
         List<Map.Entry<Rank, List<Card>>> threes = byRank.entrySet().stream().filter(e -> e.getValue().size() == 3).collect(toList());

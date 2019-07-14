@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 import static com.simondudley.poker.Card.Rank;
 import static com.simondudley.poker.Card.Suit;
 import static com.simondudley.poker.Hand.HandValue.*;
-import static java.util.Comparator.*;
+import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.*;
 
 class Hand implements Comparable<Hand> {
@@ -59,33 +59,25 @@ class Hand implements Comparable<Hand> {
             throw new IllegalArgumentException("There must be five cards in yo' hand");
         }
 
-        // of a kind...
-        Map<Rank, List<Card>> byRank = hand.stream().collect(groupingBy(c -> c.rank));
-        Map<Rank, Integer> sizeByRank = byRank.entrySet().stream().collect(toMap(Map.Entry::getKey, e -> e.getValue().size()));
-        List<Map.Entry<Rank, Integer>> sortedRankOccurrences = Lists.reverse(
-                sizeByRank.entrySet().stream()
-                        .sorted(comparingInt(Map.Entry::getValue))
-                        .collect(toList())
-        );
-        int primaryRankFrequency = sortedRankOccurrences.get(0).getValue();
-        boolean hasSecondaryPair = sortedRankOccurrences.get(1).getValue() == 2;
+        // x of a kind...
+        List<Integer> frequencies = getRankFrequencies(hand);
 
         HandValue handValue;
-        if (isFlush(hand) && isStraight(hand)) {
+        if (isStraight(hand) && isFlush(hand)) {
             handValue = STRAIGHT_FLUSH; // highest in hand wins
-        } else if (primaryRankFrequency == 4) {
+        } else if (frequencies.contains(4)) {
             handValue = FOUR_OF_A_KIND; // highest in hand wins; if four of a kind on the board, then kicker
-        } else if (primaryRankFrequency == 3 && hasSecondaryPair) {
+        } else if (frequencies.contains(3) && frequencies.contains(2)) {
             handValue = FULL_HOUSE; // highest three wins, then highest pair, then kicker
         } else if (isFlush(hand)) {
             handValue = FLUSH; // highest non-equal rank card wins (even if it's the lowest in the flush)
         } else if (isStraight(hand)) {
             handValue = STRAIGHT; // highest in hand wins, straight on board - split pot unless
-        } else if (primaryRankFrequency == 3) {
+        } else if (frequencies.contains(3)) {
             handValue = THREE_OF_A_KIND; // highest in hand wins
-        } else if (primaryRankFrequency == 2 && hasSecondaryPair) {
+        } else if (frequencies.stream().filter(f -> f == 2).count() == 2) {
             handValue = TWO_PAIR; // highest pair wins, then highest second pair, then kicker
-        } else if (primaryRankFrequency == 2) {
+        } else if (frequencies.contains(2)) {
             handValue = ONE_PAIR; // highest in hand, if equal then kicker
         } else {
             handValue = HIGH_CARD; // highest in hand, check next card
@@ -93,8 +85,9 @@ class Hand implements Comparable<Hand> {
         return handValue;
     }
 
-    private static boolean isFlush(List<Card> hand) {
-        return Stream.of(Suit.values()).anyMatch(suit -> hand.stream().allMatch(card -> card.suit.equals(suit)));
+    private static List<Integer> getRankFrequencies(List<Card> hand) {
+        Map<Rank, Long> frequencyByRank = hand.stream().collect(groupingBy(c -> c.rank, counting()));
+        return frequencyByRank.values().stream().map(Long::intValue).collect(toList());
     }
 
     private static boolean isStraight(List<Card> hand) {
@@ -109,6 +102,10 @@ class Hand implements Comparable<Hand> {
             }
         }
         return true;
+    }
+
+    private static boolean isFlush(List<Card> hand) {
+        return Stream.of(Suit.values()).anyMatch(suit -> hand.stream().allMatch(card -> card.suit.equals(suit)));
     }
 
     @Override

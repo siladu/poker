@@ -8,34 +8,20 @@ import java.util.stream.Stream;
 import static com.simondudley.poker.Card.Rank;
 import static com.simondudley.poker.Card.Suit;
 import static com.simondudley.poker.Hand.HandValue.*;
-import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.*;
 
 class Hand implements Comparable<Hand> {
 
     enum HandValue {
-
-        STRAIGHT_FLUSH(9), // Royal = Ace high,
-        FOUR_OF_A_KIND(8),
-        FULL_HOUSE(7),
-        FLUSH(6),
-        STRAIGHT(5),
-        THREE_OF_A_KIND(4),
-        TWO_PAIR(3),
-        ONE_PAIR(2),
-        HIGH_CARD(1);
-
-        private final int value;
-
-        HandValue(int value) {
-            this.value = value;
-        }
-
-        int getValue() {
-            return value;
-        }
-
-        static final Comparator<HandValue> HAND_VALUE_COMPARATOR = comparingInt(HandValue::getValue);
+        HIGH_CARD,
+        ONE_PAIR,
+        TWO_PAIR,
+        THREE_OF_A_KIND,
+        STRAIGHT,
+        FLUSH,
+        FULL_HOUSE,
+        FOUR_OF_A_KIND,
+        STRAIGHT_FLUSH, // Royal = Ace high
     }
 
     private final HandValue handValue;
@@ -114,14 +100,10 @@ class Hand implements Comparable<Hand> {
         boolean handsValuesAreNotEqual = !this.handValue.equals(o.handValue);
 
         if (handsValuesAreNotEqual) {
-            return compareByHandValue(o);
+            return this.getHandValue().compareTo(o.getHandValue());
         } else {
             return compareByRank(o);
         }
-    }
-
-    private int compareByHandValue(Hand o) {
-        return HAND_VALUE_COMPARATOR.compare(this.handValue, o.handValue);
     }
 
     private int compareByRank(Hand o) {

@@ -70,7 +70,7 @@ class Hand implements Comparable<Hand> {
         boolean hasSecondaryPair = sortedRankOccurrences.get(1).getValue() == 2;
 
         HandValue handValue;
-        if (isFlush(hand) && isConsecutive(hand)) {
+        if (isFlush(hand) && isStraight(hand)) {
             handValue = STRAIGHT_FLUSH; // highest in hand wins
         } else if (primaryRankFrequency == 4) {
             handValue = FOUR_OF_A_KIND; // highest in hand wins; if four of a kind on the board, then kicker
@@ -78,7 +78,7 @@ class Hand implements Comparable<Hand> {
             handValue = FULL_HOUSE; // highest three wins, then highest pair, then kicker
         } else if (isFlush(hand)) {
             handValue = FLUSH; // highest non-equal rank card wins (even if it's the lowest in the flush)
-        } else if (isConsecutive(hand)) {
+        } else if (isStraight(hand)) {
             handValue = STRAIGHT; // highest in hand wins, straight on board - split pot unless
         } else if (primaryRankFrequency == 3) {
             handValue = THREE_OF_A_KIND; // highest in hand wins
@@ -96,15 +96,16 @@ class Hand implements Comparable<Hand> {
         return Stream.of(Suit.values()).anyMatch(suit -> hand.stream().allMatch(card -> card.suit.equals(suit)));
     }
 
-    private static boolean isConsecutive(List<Card> hand) {
+    private static boolean isStraight(List<Card> hand) {
         // straights
-        List<Rank> sorted = hand.stream().map(e -> e.rank).sorted(Comparator.comparingInt(Rank::getValue)).collect(toList());
-        Collections.reverse(sorted);
+        Stream<Integer> sortedRankValues = hand.stream()
+                .map(e -> e.rank.getValue())
+                .sorted(Collections.reverseOrder());
+
 //        sorted.stream().map(r -> r.getValue()).reduce(true, (isConsecutive, rankValue) -> , (a, b) -> a - 1 == b)
-        List<Integer> sortedRankValues = sorted.stream().mapToInt(Rank::getValue).boxed().collect(toList());
         boolean isConsecutive = true;
         Integer previous = null;
-        for (Integer rankValue : sortedRankValues) {
+        for (Integer rankValue : sortedRankValues.collect(toList())) {
             if (previous != null) {
                 isConsecutive = ((previous - 1) == rankValue);
                 if (!isConsecutive) {

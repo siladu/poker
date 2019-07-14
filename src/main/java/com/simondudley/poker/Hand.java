@@ -24,16 +24,12 @@ class Hand implements Comparable<Hand> {
         STRAIGHT_FLUSH, // Royal = Ace high
     }
 
-    private final HandValue handValue;
+    final HandValue handValue;
     private final List<Card> cards;
 
     Hand(HandValue handValue, List<Card> cards) {
         this.handValue = handValue;
         this.cards = Lists.reverse(cards.stream().sorted().collect(toList()));
-    }
-
-    HandValue getHandValue() {
-        return handValue;
     }
 
     static Hand from(List<Card> hand) {
@@ -78,7 +74,7 @@ class Hand implements Comparable<Hand> {
 
     private static boolean isStraight(List<Card> hand) {
         List<Integer> sortedRankValues = hand.stream()
-                .map(e -> e.rank.getValue())
+                .map(e -> e.rank.value)
                 .sorted()
                 .collect(toList());
 
@@ -100,7 +96,7 @@ class Hand implements Comparable<Hand> {
         boolean handsValuesNotEqual = !this.handValue.equals(o.handValue);
 
         if (handsValuesNotEqual) {
-            return this.getHandValue().compareTo(o.getHandValue());
+            return this.handValue.compareTo(o.handValue);
         } else {
             return compareByRank(o);
         }

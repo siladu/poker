@@ -52,16 +52,12 @@ class Card implements Comparable<Card> {
         KING(13, "K"),
         ACE(14, "A");
 
-        private int value;
+        int value;
         private String symbol;
 
         Rank(int value, String symbol) {
             this.value = value;
             this.symbol = symbol;
-        }
-
-        int getValue() {
-            return value;
         }
     }
 

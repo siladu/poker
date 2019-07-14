@@ -82,7 +82,7 @@ class Game {
         List<Hand> hands = combinations.stream().map(ArrayList::new).map(Hand::from).collect(toList());
         Optional<Hand> bestHand = hands.stream().max(Comparator.naturalOrder());
 
-        System.out.println(String.format("%s %s %s", player, board, bestHand.get().getHandValue()));
+        System.out.println(String.format("%s %s %s", player, board, bestHand.get().handValue));
 
         return bestHand.get();
     }

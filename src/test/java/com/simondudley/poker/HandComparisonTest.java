@@ -27,7 +27,7 @@ public class HandComparisonTest {
                 new Card(TEN, SPADES),
                 new Card(NINE, SPADES));
 
-        assertThat(Hand.from(highStraight).getHandValue()).isEqualTo(STRAIGHT_FLUSH);
+        assertThat(Hand.from(highStraight).handValue).isEqualTo(STRAIGHT_FLUSH);
         assertThat(Hand.from(highStraight)).isGreaterThan(Hand.from(lowStraight));
     }
 
@@ -47,7 +47,7 @@ public class HandComparisonTest {
                 new Card(JACK, SPADES),
                 new Card(TEN, SPADES));
 
-        assertThat(Hand.from(equalStraight1).getHandValue()).isEqualTo(STRAIGHT_FLUSH);
+        assertThat(Hand.from(equalStraight1).handValue).isEqualTo(STRAIGHT_FLUSH);
         assertThat(Hand.from(equalStraight1)).isEqualTo(Hand.from(equalStraight2));
     }
 
@@ -67,7 +67,7 @@ public class HandComparisonTest {
                 new Card(JACK, SPADES),
                 new Card(TEN, SPADES));
 
-        assertThat(Hand.from(equalStraight1).getHandValue()).isEqualTo(STRAIGHT_FLUSH);
+        assertThat(Hand.from(equalStraight1).handValue).isEqualTo(STRAIGHT_FLUSH);
         assertThat(Hand.from(equalStraight1)).isEqualTo(Hand.from(equalStraight2));
     }
 
@@ -87,7 +87,7 @@ public class HandComparisonTest {
                 new Card(THREE, DIAMONDS),
                 new Card(TWO, SPADES));
 
-        assertThat(Hand.from(highestFour).getHandValue()).isEqualTo(FOUR_OF_A_KIND);
+        assertThat(Hand.from(highestFour).handValue).isEqualTo(FOUR_OF_A_KIND);
         assertThat(Hand.from(highestFour)).isGreaterThan(Hand.from(lowestFour));
     }
 
@@ -107,7 +107,7 @@ public class HandComparisonTest {
                 new Card(FOUR, DIAMONDS),
                 new Card(TWO, SPADES));
 
-        assertThat(Hand.from(highestKicker).getHandValue()).isEqualTo(FOUR_OF_A_KIND);
+        assertThat(Hand.from(highestKicker).handValue).isEqualTo(FOUR_OF_A_KIND);
         assertThat(Hand.from(highestKicker)).isGreaterThan(Hand.from(lowestKicker));
     }
 
@@ -127,7 +127,7 @@ public class HandComparisonTest {
                 new Card(FOUR, DIAMONDS),
                 new Card(THREE, HEARTS));
 
-        assertThat(Hand.from(equalKicker1).getHandValue()).isEqualTo(FOUR_OF_A_KIND);
+        assertThat(Hand.from(equalKicker1).handValue).isEqualTo(FOUR_OF_A_KIND);
         assertThat(Hand.from(equalKicker1)).isEqualTo(Hand.from(equalKicker2));
     }
 
@@ -147,7 +147,7 @@ public class HandComparisonTest {
                 new Card(ACE, CLUBS),
                 new Card(ACE, SPADES));
 
-        assertThat(Hand.from(highestThree).getHandValue()).isEqualTo(FULL_HOUSE);
+        assertThat(Hand.from(highestThree).handValue).isEqualTo(FULL_HOUSE);
         assertThat(Hand.from(highestThree)).isGreaterThan(Hand.from(lowestThree));
     }
 
@@ -167,7 +167,7 @@ public class HandComparisonTest {
                 new Card(KING, CLUBS),
                 new Card(KING, SPADES));
 
-        assertThat(Hand.from(highestPair).getHandValue()).isEqualTo(FULL_HOUSE);
+        assertThat(Hand.from(highestPair).handValue).isEqualTo(FULL_HOUSE);
         assertThat(Hand.from(highestPair)).isGreaterThan(Hand.from(lowestPair));
     }
 
@@ -187,7 +187,7 @@ public class HandComparisonTest {
                 new Card(ACE, HEARTS),
                 new Card(ACE, DIAMONDS));
 
-        assertThat(Hand.from(highestPair).getHandValue()).isEqualTo(FULL_HOUSE);
+        assertThat(Hand.from(highestPair).handValue).isEqualTo(FULL_HOUSE);
         assertThat(Hand.from(highestPair)).isEqualTo(Hand.from(lowestPair));
     }
 
@@ -207,7 +207,7 @@ public class HandComparisonTest {
                 new Card(TEN, HEARTS),
                 new Card(TWO, HEARTS));
 
-        assertThat(Hand.from(highFlush).getHandValue()).isEqualTo(FLUSH);
+        assertThat(Hand.from(highFlush).handValue).isEqualTo(FLUSH);
         assertThat(Hand.from(highFlush)).isGreaterThan(Hand.from(lowFlush));
     }
 
@@ -227,7 +227,7 @@ public class HandComparisonTest {
                 new Card(TEN, HEARTS),
                 new Card(THREE, HEARTS));
 
-        assertThat(Hand.from(equalFlush1).getHandValue()).isEqualTo(FLUSH);
+        assertThat(Hand.from(equalFlush1).handValue).isEqualTo(FLUSH);
         assertThat(Hand.from(equalFlush1)).isEqualTo(Hand.from(equalFlush2));
     }
 
@@ -247,7 +247,7 @@ public class HandComparisonTest {
                 new Card(TEN, DIAMONDS),
                 new Card(NINE, HEARTS));
 
-        assertThat(Hand.from(highStraight).getHandValue()).isEqualTo(STRAIGHT);
+        assertThat(Hand.from(highStraight).handValue).isEqualTo(STRAIGHT);
         assertThat(Hand.from(highStraight)).isGreaterThan(Hand.from(lowStraight));
     }
 
@@ -267,7 +267,7 @@ public class HandComparisonTest {
                 new Card(JACK, CLUBS),
                 new Card(TEN, DIAMONDS));
 
-        assertThat(Hand.from(straight1).getHandValue()).isEqualTo(STRAIGHT);
+        assertThat(Hand.from(straight1).handValue).isEqualTo(STRAIGHT);
         assertThat(Hand.from(straight1)).isEqualTo(Hand.from(straight2));
     }
 
@@ -287,7 +287,7 @@ public class HandComparisonTest {
                 new Card(QUEEN, DIAMONDS),
                 new Card(FOUR, HEARTS));
 
-        assertThat(Hand.from(highThree).getHandValue()).isEqualTo(THREE_OF_A_KIND);
+        assertThat(Hand.from(highThree).handValue).isEqualTo(THREE_OF_A_KIND);
         assertThat(Hand.from(highThree)).isGreaterThan(Hand.from(lowThree));
     }
 
@@ -307,7 +307,7 @@ public class HandComparisonTest {
                 new Card(KING, DIAMONDS),
                 new Card(THREE, SPADES));
 
-        assertThat(Hand.from(highestKicker).getHandValue()).isEqualTo(THREE_OF_A_KIND);
+        assertThat(Hand.from(highestKicker).handValue).isEqualTo(THREE_OF_A_KIND);
         assertThat(Hand.from(highestKicker)).isGreaterThan(Hand.from(lowestKicker));
     }
 
@@ -327,7 +327,7 @@ public class HandComparisonTest {
                 new Card(ACE, DIAMONDS),
                 new Card(TWO, SPADES));
 
-        assertThat(Hand.from(highestKicker).getHandValue()).isEqualTo(THREE_OF_A_KIND);
+        assertThat(Hand.from(highestKicker).handValue).isEqualTo(THREE_OF_A_KIND);
         assertThat(Hand.from(highestKicker)).isGreaterThan(Hand.from(lowestKicker));
     }
 
@@ -347,7 +347,7 @@ public class HandComparisonTest {
                 new Card(ACE, HEARTS),
                 new Card(THREE, HEARTS));
 
-        assertThat(Hand.from(equalKicker1).getHandValue()).isEqualTo(THREE_OF_A_KIND);
+        assertThat(Hand.from(equalKicker1).handValue).isEqualTo(THREE_OF_A_KIND);
         assertThat(Hand.from(equalKicker1)).isEqualTo(Hand.from(equalKicker2));
     }
 
@@ -367,7 +367,7 @@ public class HandComparisonTest {
                 new Card(QUEEN, DIAMONDS),
                 new Card(FOUR, HEARTS));
 
-        assertThat(Hand.from(highPairTwoPair).getHandValue()).isEqualTo(TWO_PAIR);
+        assertThat(Hand.from(highPairTwoPair).handValue).isEqualTo(TWO_PAIR);
         assertThat(Hand.from(highPairTwoPair)).isGreaterThan(Hand.from(lowPairTwoPair));
     }
 
@@ -387,7 +387,7 @@ public class HandComparisonTest {
                 new Card(QUEEN, DIAMONDS),
                 new Card(FOUR, HEARTS));
 
-        assertThat(Hand.from(highTwoPair).getHandValue()).isEqualTo(TWO_PAIR);
+        assertThat(Hand.from(highTwoPair).handValue).isEqualTo(TWO_PAIR);
         assertThat(Hand.from(highTwoPair)).isGreaterThan(Hand.from(lowTwoPair));
     }
 
@@ -407,7 +407,7 @@ public class HandComparisonTest {
                 new Card(QUEEN, DIAMONDS),
                 new Card(FIVE, HEARTS));
 
-        assertThat(Hand.from(highKicker).getHandValue()).isEqualTo(TWO_PAIR);
+        assertThat(Hand.from(highKicker).handValue).isEqualTo(TWO_PAIR);
         assertThat(Hand.from(highKicker)).isGreaterThan(Hand.from(lowKicker));
     }
 
@@ -427,7 +427,7 @@ public class HandComparisonTest {
                 new Card(QUEEN, DIAMONDS),
                 new Card(FIVE, HEARTS));
 
-        assertThat(Hand.from(equalKicker1).getHandValue()).isEqualTo(TWO_PAIR);
+        assertThat(Hand.from(equalKicker1).handValue).isEqualTo(TWO_PAIR);
         assertThat(Hand.from(equalKicker1)).isEqualTo(Hand.from(equalKicker2));
     }
 
@@ -447,7 +447,7 @@ public class HandComparisonTest {
                 new Card(THREE, HEARTS),
                 new Card(FOUR, DIAMONDS));
 
-        assertThat(Hand.from(highPair).getHandValue()).isEqualTo(ONE_PAIR);
+        assertThat(Hand.from(highPair).handValue).isEqualTo(ONE_PAIR);
         assertThat(Hand.from(highPair)).isGreaterThan(Hand.from(lowPair));
     }
 
@@ -467,7 +467,7 @@ public class HandComparisonTest {
                 new Card(THREE, HEARTS),
                 new Card(FOUR, HEARTS));
 
-        assertThat(Hand.from(highKicker).getHandValue()).isEqualTo(ONE_PAIR);
+        assertThat(Hand.from(highKicker).handValue).isEqualTo(ONE_PAIR);
         assertThat(Hand.from(highKicker)).isGreaterThan(Hand.from(lowKicker));
     }
 
@@ -487,7 +487,7 @@ public class HandComparisonTest {
                 new Card(QUEEN, HEARTS),
                 new Card(THREE, HEARTS));
 
-        assertThat(Hand.from(highKicker).getHandValue()).isEqualTo(ONE_PAIR);
+        assertThat(Hand.from(highKicker).handValue).isEqualTo(ONE_PAIR);
         assertThat(Hand.from(highKicker)).isGreaterThan(Hand.from(lowKicker));
     }
 
@@ -507,7 +507,7 @@ public class HandComparisonTest {
                 new Card(THREE, HEARTS),
                 new Card(FOUR, HEARTS));
 
-        assertThat(Hand.from(equalKicker1).getHandValue()).isEqualTo(ONE_PAIR);
+        assertThat(Hand.from(equalKicker1).handValue).isEqualTo(ONE_PAIR);
         assertThat(Hand.from(equalKicker1)).isEqualTo(Hand.from(equalKicker2));
     }
 }

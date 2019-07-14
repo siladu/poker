@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 import static com.simondudley.poker.Card.Rank;
 import static com.simondudley.poker.Card.Suit;
 import static com.simondudley.poker.Hand.HandValue.*;
+import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.*;
 
 class Hand implements Comparable<Hand> {
@@ -34,7 +35,7 @@ class Hand implements Comparable<Hand> {
             return value;
         }
 
-        static final Comparator<HandValue> HAND_VALUE_COMPARATOR = Comparator.comparingInt(HandValue::getValue);
+        static final Comparator<HandValue> HAND_VALUE_COMPARATOR = comparingInt(HandValue::getValue);
     }
 
     private final HandValue handValue;
@@ -63,7 +64,7 @@ class Hand implements Comparable<Hand> {
         Map<Rank, Integer> sizeByRank = byRank.entrySet().stream().collect(toMap(Map.Entry::getKey, e -> e.getValue().size()));
         List<Map.Entry<Rank, Integer>> sortedRankOccurrences = Lists.reverse(
                 sizeByRank.entrySet().stream()
-                        .sorted(Comparator.comparingInt(Map.Entry::getValue))
+                        .sorted(comparingInt(Map.Entry::getValue))
                         .collect(toList())
         );
         int primaryRankFrequency = sortedRankOccurrences.get(0).getValue();
@@ -97,25 +98,16 @@ class Hand implements Comparable<Hand> {
     }
 
     private static boolean isStraight(List<Card> hand) {
-        // straights
-        Stream<Integer> sortedRankValues = hand.stream()
+        List<Integer> sortedRankValues = hand.stream()
                 .map(e -> e.rank.getValue())
-                .sorted(Collections.reverseOrder());
+                .collect(toList());
 
-//        sorted.stream().map(r -> r.getValue()).reduce(true, (isConsecutive, rankValue) -> , (a, b) -> a - 1 == b)
-        boolean isConsecutive = true;
-        Integer previous = null;
-        for (Integer rankValue : sortedRankValues.collect(toList())) {
-            if (previous != null) {
-                isConsecutive = ((previous - 1) == rankValue);
-                if (!isConsecutive) {
-                    break;
-                }
+        for (int i = 1; i < sortedRankValues.size(); i++) {
+            if (sortedRankValues.get(i - 1) != sortedRankValues.get(i) + 1) {
+                return false;
             }
-            previous = rankValue;
         }
-//        Streams.forEachPair();
-        return isConsecutive;
+        return true;
     }
 
     @Override

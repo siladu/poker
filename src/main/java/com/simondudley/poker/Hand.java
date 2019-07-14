@@ -97,9 +97,9 @@ class Hand implements Comparable<Hand> {
     @Override
     public int compareTo(Hand o) {
 
-        boolean handsValuesAreNotEqual = !this.handValue.equals(o.handValue);
+        boolean handsValuesNotEqual = !this.handValue.equals(o.handValue);
 
-        if (handsValuesAreNotEqual) {
+        if (handsValuesNotEqual) {
             return this.getHandValue().compareTo(o.getHandValue());
         } else {
             return compareByRank(o);
@@ -107,6 +107,7 @@ class Hand implements Comparable<Hand> {
     }
 
     private int compareByRank(Hand o) {
+
         if (FULL_HOUSE.equals(handValue)) {
             return compareFullHouse(o);
         }
@@ -125,24 +126,18 @@ class Hand implements Comparable<Hand> {
     }
 
     private int compareFullHouse(Hand o) {
-        Map<Rank, List<Card>> byRank = cards.stream().collect(groupingBy(c -> c.rank, () -> new EnumMap<>(Rank.class), toList()));
-        Map<Rank, List<Card>> byRankOther = o.cards.stream().collect(groupingBy(c -> c.rank, () -> new EnumMap<>(Rank.class), toList()));
+        Map<Rank, Long> freqByRank = cards.stream().collect(groupingBy(c -> c.rank, () -> new EnumMap<>(Rank.class), counting()));
+        Map<Integer, Rank> rankByFreq = freqByRank.entrySet().stream().collect(toMap(e -> e.getValue().intValue(), Map.Entry::getKey));
 
-        // compare three of a kind
-        List<Map.Entry<Rank, List<Card>>> threes = byRank.entrySet().stream().filter(e -> e.getValue().size() == 3).collect(toList());
-        List<Map.Entry<Rank, List<Card>>> threesOther = byRankOther.entrySet().stream().filter(e -> e.getValue().size() == 3).collect(toList());
-        Rank threesRank = threes.get(0).getKey();
-        Rank threesRankOther = threesOther.get(0).getKey();
-        if (!threesRank.equals(threesRankOther)) {
-            return threesRank.compareTo(threesRankOther);
+        Map<Rank, Long> otherFreqByRank = o.cards.stream().collect(groupingBy(c -> c.rank, () -> new EnumMap<>(Rank.class), counting()));
+        Map<Integer, Rank> otherRankByFreq = otherFreqByRank.entrySet().stream().collect(toMap(e -> e.getValue().intValue(), Map.Entry::getKey));
+
+        boolean threeOfAKindNotEqual = !rankByFreq.get(3).equals(otherRankByFreq.get(3));
+        if (threeOfAKindNotEqual) {
+            return rankByFreq.get(3).compareTo(otherRankByFreq.get(3));
+        } else {
+            return rankByFreq.get(2).compareTo(otherRankByFreq.get(2));
         }
-
-        // compare pair
-        List<Map.Entry<Rank, List<Card>>> pair = byRank.entrySet().stream().filter(e -> e.getValue().size() == 2).collect(toList());
-        List<Map.Entry<Rank, List<Card>>> pairOther = byRankOther.entrySet().stream().filter(e -> e.getValue().size() == 2).collect(toList());
-        Rank pairRank = pair.get(0).getKey();
-        Rank pairRankOther = pairOther.get(0).getKey();
-        return pairRank.compareTo(pairRankOther);
     }
 
     @Override

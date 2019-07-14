@@ -24,7 +24,11 @@ class Hand implements Comparable<Hand> {
         STRAIGHT_FLUSH, // Royal = Ace high
     }
 
-    final HandValue handValue;
+    HandValue getHandValue() {
+        return handValue;
+    }
+
+    private final HandValue handValue;
     private final List<Card> cards;
 
     Hand(HandValue handValue, List<Card> cards) {

@@ -40,9 +40,10 @@ public class GameTest {
                 new Card(SEVEN, DIAMONDS)
         );
 
-        Map<Game.Player, Hand> winners = game.determineWinners(players, board);
+        Map<Game.Player, Hand> playersBestHands = game.determinePlayersBestHands(players, board);
+        Map<Game.Player, Hand> winners = game.determineWinners(playersBestHands);
         assertThat(winners).hasSize(1);
         assertThat(winners.containsKey(player1));
-        assertThat(winners.get(player1).handValue).isEqualTo(TWO_PAIR);
+        assertThat(winners.get(player1).getHandValue()).isEqualTo(TWO_PAIR);
     }
 }

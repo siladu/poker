@@ -11,7 +11,7 @@ import static java.util.stream.Collectors.toSet;
 
 class Game {
 
-    void startGame(int numPlayers) {
+    Map<Player, Hand> startGame(int numPlayers) {
         if (numPlayers > 23) {
             throw new IllegalArgumentException("Maximum number of players is 23 for one deck of cards");
         }
@@ -20,7 +20,9 @@ class Game {
         List<Player> players = createPlayers(numPlayers);
         dealToPlayers(deck, players);
         List<Card> board = dealBoard(deck);
-        determineWinners(players, board);
+        Map<Player, Hand> playersBestHands = determinePlayersBestHands(players, board);
+        determineWinners(playersBestHands);
+        return playersBestHands;
     }
 
     private Deck createAndShuffleDeck() {
@@ -58,11 +60,15 @@ class Game {
         return board;
     }
 
-    Map<Player, Hand> determineWinners(List<Player> players, List<Card> board) {
+    Map<Player, Hand> determinePlayersBestHands(List<Player> players, List<Card> board) {
         Map<Player, Hand> playersBestHands = new HashMap<>();
         for (Player player : players) {
             playersBestHands.put(player, bestHandFor(player, board));
         }
+        return playersBestHands;
+    }
+
+    Map<Player, Hand> determineWinners(Map<Player, Hand> playersBestHands) {
         Optional<Map.Entry<Player, Hand>> winner = playersBestHands.entrySet().stream().max(Comparator.comparing(Map.Entry::getValue));
         System.out.println("WINNER = " + winner.get());
         return Map.ofEntries(winner.get());
@@ -82,7 +88,7 @@ class Game {
         List<Hand> hands = combinations.stream().map(ArrayList::new).map(Hand::from).collect(toList());
         Optional<Hand> bestHand = hands.stream().max(Comparator.naturalOrder());
 
-        System.out.println(String.format("%s %s %s", player, board, bestHand.get().handValue));
+        System.out.println(String.format("%s %s %s", player, board, bestHand.get().getHandValue()));
 
         return bestHand.get();
     }

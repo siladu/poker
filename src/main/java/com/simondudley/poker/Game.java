@@ -36,25 +36,25 @@ class Game {
         return IntStream.rangeClosed(1, n).mapToObj(Player::new).collect(toList());
     }
 
-    private void dealToPlayers(Deck deck, List<Player> players) {
+    private List<Player> dealToPlayers(Deck deck, List<Player> players) {
         for (Player player : players) {
             player.pocket = deck.removeOptional(2);
         }
-        players.forEach(System.out::println);
+        return players;
     }
 
     private List<Card> dealBoard(Deck deck) {
         List<Card> board;
         List<Card> flop = deck.removeOptional(3);
-        System.out.println("FLOP: " + flop);
+//        System.out.println("FLOP: " + flop);
         board = flop;
         Card turn = deck.remove();
-        System.out.println("TURN: " + turn);
+//        System.out.println("TURN: " + turn);
         board.add(turn);
         Card river = deck.remove();
-        System.out.println("RIVER: " + river);
+//        System.out.println("RIVER: " + river);
         board.add(river);
-        System.out.println("BOARD: " + board);
+//        System.out.println("BOARD: " + board);
         return board;
     }
 
@@ -75,13 +75,15 @@ class Game {
                     .flatMap(Collection::stream)
                     .collect(toSet());
 
-        System.out.println(String.format("[PLAYER %s] Superset = %s", player.id, handSuperset));
+//        System.out.println(String.format("[PLAYER %s] Superset = %s", player.id, handSuperset));
 
         // combinations of 5
         Set<Set<Card>> combinations = Sets.combinations(handSuperset, 5);
         List<Hand> hands = combinations.stream().map(ArrayList::new).map(Hand::from).collect(toList());
         Optional<Hand> bestHand = hands.stream().max(Comparator.naturalOrder());
-        System.out.println(String.format("[PLAYER %s] Best Hand = %s", player.id, bestHand.get()));
+
+        System.out.println(String.format("%s %s %s", player, board, bestHand.get().getHandValue()));
+
         return bestHand.get();
     }
 
@@ -102,7 +104,7 @@ class Game {
         @Override
         public String toString() {
             return "Player{" +
-                    "id=" + id +
+                    "id=" + (id < 10 ? "0" + id : id) +
                     ", pocket=" + pocket +
                     '}';
         }

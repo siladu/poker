@@ -6,8 +6,8 @@ import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.*;
 
 class Game {
 
@@ -69,9 +69,15 @@ class Game {
     }
 
     Map<Player, Hand> determineWinners(Map<Player, Hand> playersBestHands) {
-        Optional<Map.Entry<Player, Hand>> winner = playersBestHands.entrySet().stream().max(Comparator.comparing(Map.Entry::getValue));
-        System.out.println("WINNER = " + winner.get());
-        return Map.ofEntries(winner.get());
+        Hand winningHand = playersBestHands.entrySet().stream().max(comparing(Map.Entry::getValue)).map(Map.Entry::getValue).orElseThrow();
+
+        Map<Player, Hand> winners =
+                playersBestHands.entrySet().stream()
+                    .filter(e -> e.getValue().equals(winningHand))
+                    .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        System.out.println("WINNERS = " + winners);
+        return winners;
     }
 
     private Hand bestHandFor(Player player, List<Card> board) {

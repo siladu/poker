@@ -58,13 +58,13 @@ class Hand implements Comparable<Hand> {
         } else if (isFlush(hand)) {
             handValue = FLUSH; // highest non-equal rank card wins (even if it's the lowest in the flush)
         } else if (isStraight(hand)) {
-            handValue = STRAIGHT; // highest in hand wins, straight on board - split pot unless
+            handValue = STRAIGHT; // highest in hand wins; if straight on board then split pot
         } else if (frequencies.contains(3)) {
             handValue = THREE_OF_A_KIND; // highest in hand wins
         } else if (frequencies.stream().filter(f -> f == 2).count() == 2) {
             handValue = TWO_PAIR; // highest pair wins, then highest second pair, then kicker
         } else if (frequencies.contains(2)) {
-            handValue = ONE_PAIR; // highest in hand, if equal then kicker
+            handValue = ONE_PAIR; // highest in hand, then kicker
         } else {
             handValue = HIGH_CARD; // highest in hand, check next card
         }
@@ -82,7 +82,7 @@ class Hand implements Comparable<Hand> {
                 .sorted()
                 .collect(toList());
 
-        for (int i = 1; i < sortedRankValues.size(); i++) {
+        for (int i = 1; i < sortedRankValues.size(); i++) { // are sorted values consecutive?
             if (sortedRankValues.get(i - 1) != sortedRankValues.get(i) - 1) {
                 return false;
             }

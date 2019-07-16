@@ -9,9 +9,9 @@ import java.util.stream.Stream;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.*;
 
-class Game {
+class Round {
 
-    Map<Player, Hand> startGame(int numPlayers) {
+    Map<Player, Hand> startRound(int numPlayers) {
         if (numPlayers > 23) {
             throw new IllegalArgumentException("Maximum number of players is 23 for one deck of cards");
         }

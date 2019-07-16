@@ -24,8 +24,8 @@ final class Statistics {
     private static void runTrialsFor(int trials, int numPlayers) {
         Map<HandValue, Integer> frequencyByHandValue = new HashMap<>();
         IntStream.rangeClosed(1, trials).forEach((i) -> {
-            Game game = new Game();
-            Map<Game.Player, Hand> playersBestHands = game.startGame(numPlayers);
+            Round round = new Round();
+            Map<Round.Player, Hand> playersBestHands = round.startRound(numPlayers);
             List<Hand> hands = new ArrayList<>(playersBestHands.values());
 
             System.out.println(playersBestHands);

@@ -2,6 +2,7 @@ package com.simondudley.poker;
 
 import com.google.common.collect.Sets;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -10,13 +11,48 @@ import static java.util.stream.Collectors.*;
 
 class Round {
 
+    BigDecimal pot = BigDecimal.ZERO;
+    Deck deck;
+    List<Game.Player> players;
+    List<Card> board = new ArrayList<>();
+
     List<Game.Player> startRound(List<Game.Player> players) {
         if (players.size() > 23) {
             throw new IllegalArgumentException("Maximum number of players is 23 for one deck of cards");
         }
+        this.players = players;
 
-        Deck deck = createAndShuffleDeck();
-        return dealToPlayers(deck, players);
+        deck = createAndShuffleDeck();
+        return dealToPlayers(deck, this.players);
+    }
+
+    private Deck createAndShuffleDeck() {
+        deck = Deck.newInstance();
+        System.out.println(deck);
+        System.out.println("SHUFFLE...");
+        deck.shuffle();
+        System.out.println(deck);
+        return deck;
+    }
+
+    List<Card> flop() {
+        board.addAll(deck.removeOptional(3));
+        return board;
+    }
+
+    List<Card> turn() {
+        board.add(deck.remove());
+        return board;
+    }
+
+    List<Card> river() {
+        board.add(deck.remove());
+        return board;
+    }
+
+    BigDecimal addToPot(BigDecimal money) {
+        pot = pot.add(money);
+        return pot;
     }
 
     Map<Game.Player, Hand> playThroughRound(List<Game.Player> players) {
@@ -27,19 +63,10 @@ class Round {
         Deck deck = createAndShuffleDeck();
 
         dealToPlayers(deck, players);
-        List<Card> board = dealBoard(deck);
+        board = dealBoard(deck);
         Map<Game.Player, Hand> playersBestHands = determinePlayersBestHands(players, board);
         determineWinners(playersBestHands);
         return playersBestHands;
-    }
-
-    private Deck createAndShuffleDeck() {
-        Deck deck = Deck.newInstance();
-        System.out.println(deck);
-        System.out.println("SHUFFLE...");
-        deck.shuffle();
-        System.out.println(deck);
-        return deck;
     }
 
     private List<Game.Player> dealToPlayers(Deck deck, List<Game.Player> players) {
@@ -50,18 +77,14 @@ class Round {
     }
 
     private List<Card> dealBoard(Deck deck) {
-        List<Card> board;
-        List<Card> flop = deck.removeOptional(3);
-//        System.out.println("FLOP: " + flop);
-        board = flop;
-        Card turn = deck.remove();
-//        System.out.println("TURN: " + turn);
-        board.add(turn);
-        Card river = deck.remove();
-//        System.out.println("RIVER: " + river);
-        board.add(river);
-//        System.out.println("BOARD: " + board);
+        flop();
+        turn();
+        river();
         return board;
+    }
+
+    Map<Game.Player, Hand> determineRoundWinners() {
+        return determineWinners(determinePlayersBestHands(players, board));
     }
 
     Map<Game.Player, Hand> determinePlayersBestHands(List<Game.Player> players, List<Card> board) {

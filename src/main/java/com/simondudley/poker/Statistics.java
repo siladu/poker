@@ -30,7 +30,7 @@ final class Statistics {
         IntStream.rangeClosed(1, trials).forEach((i) -> {
             List<Game.Player> players = createPlayers(numPlayers);
             Round round = new Round();
-            Map<Game.Player, Hand> playersBestHands = round.startRound(players);
+            Map<Game.Player, Hand> playersBestHands = round.playThroughRound(players);
             List<Hand> hands = new ArrayList<>(playersBestHands.values());
 
             System.out.println(playersBestHands);

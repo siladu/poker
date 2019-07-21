@@ -24,6 +24,11 @@ public class Game {
         // bet on river
     }
 
+    void playThroughGameNoBetting() {
+        Round round = new Round();
+        round.playThroughRound(players);
+    }
+
     private List<Game.Player> createPlayers(int n) {
         return IntStream.rangeClosed(1, n).mapToObj(Game.Player::new).collect(toList());
     }

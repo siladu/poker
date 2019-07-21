@@ -10,7 +10,16 @@ import static java.util.stream.Collectors.*;
 
 class Round {
 
-    Map<Game.Player, Hand> startRound(List<Game.Player> players) {
+    List<Game.Player> startRound(List<Game.Player> players) {
+        if (players.size() > 23) {
+            throw new IllegalArgumentException("Maximum number of players is 23 for one deck of cards");
+        }
+
+        Deck deck = createAndShuffleDeck();
+        return dealToPlayers(deck, players);
+    }
+
+    Map<Game.Player, Hand> playThroughRound(List<Game.Player> players) {
         if (players.size() > 23) {
             throw new IllegalArgumentException("Maximum number of players is 23 for one deck of cards");
         }

@@ -4,7 +4,7 @@ final class Application {
 
     public static void main(String[] args) {
 
-        Round round = new Round();
-        round.startRound(23);
+        Game game = new Game(23);
+        game.startGame();
     }
 }

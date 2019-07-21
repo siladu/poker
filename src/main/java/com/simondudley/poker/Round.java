@@ -3,7 +3,6 @@ package com.simondudley.poker;
 import com.google.common.collect.Sets;
 
 import java.util.*;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.Comparator.comparing;
@@ -11,16 +10,16 @@ import static java.util.stream.Collectors.*;
 
 class Round {
 
-    Map<Player, Hand> startRound(int numPlayers) {
-        if (numPlayers > 23) {
+    Map<Game.Player, Hand> startRound(List<Game.Player> players) {
+        if (players.size() > 23) {
             throw new IllegalArgumentException("Maximum number of players is 23 for one deck of cards");
         }
 
         Deck deck = createAndShuffleDeck();
-        List<Player> players = createPlayers(numPlayers);
+
         dealToPlayers(deck, players);
         List<Card> board = dealBoard(deck);
-        Map<Player, Hand> playersBestHands = determinePlayersBestHands(players, board);
+        Map<Game.Player, Hand> playersBestHands = determinePlayersBestHands(players, board);
         determineWinners(playersBestHands);
         return playersBestHands;
     }
@@ -34,12 +33,8 @@ class Round {
         return deck;
     }
 
-    private List<Player> createPlayers(int n) {
-        return IntStream.rangeClosed(1, n).mapToObj(Player::new).collect(toList());
-    }
-
-    private List<Player> dealToPlayers(Deck deck, List<Player> players) {
-        for (Player player : players) {
+    private List<Game.Player> dealToPlayers(Deck deck, List<Game.Player> players) {
+        for (Game.Player player : players) {
             player.pocket = deck.removeOptional(2);
         }
         return players;
@@ -60,18 +55,18 @@ class Round {
         return board;
     }
 
-    Map<Player, Hand> determinePlayersBestHands(List<Player> players, List<Card> board) {
-        Map<Player, Hand> playersBestHands = new HashMap<>();
-        for (Player player : players) {
+    Map<Game.Player, Hand> determinePlayersBestHands(List<Game.Player> players, List<Card> board) {
+        Map<Game.Player, Hand> playersBestHands = new HashMap<>();
+        for (Game.Player player : players) {
             playersBestHands.put(player, bestHandFor(player, board));
         }
         return playersBestHands;
     }
 
-    Map<Player, Hand> determineWinners(Map<Player, Hand> playersBestHands) {
+    Map<Game.Player, Hand> determineWinners(Map<Game.Player, Hand> playersBestHands) {
         Hand winningHand = playersBestHands.entrySet().stream().max(comparing(Map.Entry::getValue)).map(Map.Entry::getValue).orElseThrow();
 
-        Map<Player, Hand> winners =
+        Map<Game.Player, Hand> winners =
                 playersBestHands.entrySet().stream()
                     .filter(e -> e.getValue().equals(winningHand))
                     .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
@@ -80,7 +75,7 @@ class Round {
         return winners;
     }
 
-    private Hand bestHandFor(Player player, List<Card> board) {
+    private Hand bestHandFor(Game.Player player, List<Card> board) {
 
         Set<Card> handSuperset =
             Stream.of(player.pocket, board)
@@ -99,26 +94,4 @@ class Round {
         return bestHand.get();
     }
 
-    public static class Player {
-
-        int id;
-        List<Card> pocket;
-
-        Player(int id) {
-            this.id = id;
-        }
-
-        Player(int id, List<Card> pocket) {
-            this.id = id;
-            this.pocket = pocket;
-        }
-
-        @Override
-        public String toString() {
-            return "Player{" +
-                    "id=" + (id < 10 ? "0" + id : id) +
-                    ", pocket=" + pocket +
-                    '}';
-        }
-    }
 }

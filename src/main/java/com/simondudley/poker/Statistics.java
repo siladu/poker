@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+import static com.simondudley.poker.Hand.HandValue;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.*;
-import static com.simondudley.poker.Hand.HandValue;
 
 final class Statistics {
 
@@ -21,11 +21,16 @@ final class Statistics {
 //        runTrialsFor(10000, 6);
     }
 
+    private static List<Game.Player> createPlayers(int n) {
+        return IntStream.rangeClosed(1, n).mapToObj(Game.Player::new).collect(toList());
+    }
+
     private static void runTrialsFor(int trials, int numPlayers) {
         Map<HandValue, Integer> frequencyByHandValue = new HashMap<>();
         IntStream.rangeClosed(1, trials).forEach((i) -> {
+            List<Game.Player> players = createPlayers(numPlayers);
             Round round = new Round();
-            Map<Round.Player, Hand> playersBestHands = round.startRound(numPlayers);
+            Map<Game.Player, Hand> playersBestHands = round.startRound(players);
             List<Hand> hands = new ArrayList<>(playersBestHands.values());
 
             System.out.println(playersBestHands);

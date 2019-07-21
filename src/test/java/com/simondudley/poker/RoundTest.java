@@ -17,15 +17,15 @@ public class RoundTest {
     public void testSplitPot() {
         // four of a kind on the board, two players with equal kicker
 
-        Round.Player player1 = new Round.Player(1, List.of(
+        Game.Player player1 = new Game.Player(1, List.of(
                 new Card(JACK, DIAMONDS),
                 new Card(TEN, SPADES)
         ));
-        Round.Player player2 = new Round.Player(2, List.of(
+        Game.Player player2 = new Game.Player(2, List.of(
                 new Card(JACK, HEARTS),
                 new Card(THREE, HEARTS)
         ));
-        Round.Player player3 = new Round.Player(3, List.of(
+        Game.Player player3 = new Game.Player(3, List.of(
                 new Card(TEN, CLUBS),
                 new Card(FIVE, CLUBS)
         ));
@@ -41,8 +41,8 @@ public class RoundTest {
 
         var round = new Round();
 
-        Map<Round.Player, Hand> playersBestHands = round.determinePlayersBestHands(players, board);
-        Map<Round.Player, Hand> winners = round.determineWinners(playersBestHands);
+        Map<Game.Player, Hand> playersBestHands = round.determinePlayersBestHands(players, board);
+        Map<Game.Player, Hand> winners = round.determineWinners(playersBestHands);
         assertThat(winners).hasSize(2);
         assertThat(winners).containsKey(player1);
         assertThat(winners).containsKey(player2);
@@ -55,16 +55,16 @@ public class RoundTest {
     public void testTwoPairOnBoardWithKickerWinner() {
         // two pair on the board, kicker determines winner
 
-        Round.Player player1 = new Round.Player(1, List.of(
+        Game.Player player1 = new Game.Player(1, List.of(
                 new Card(JACK, DIAMONDS),
                 new Card(QUEEN, SPADES)
         ));
 
-        Round.Player player2 = new Round.Player(2, List.of(
+        Game.Player player2 = new Game.Player(2, List.of(
                 new Card(TEN, HEARTS),
                 new Card(THREE, HEARTS)
         ));
-        Round.Player player3 = new Round.Player(3, List.of(
+        Game.Player player3 = new Game.Player(3, List.of(
                 new Card(TEN, CLUBS),
                 new Card(FIVE, CLUBS)
         ));
@@ -79,8 +79,8 @@ public class RoundTest {
         );
 
         var round = new Round();
-        Map<Round.Player, Hand> playersBestHands = round.determinePlayersBestHands(players, board);
-        Map<Round.Player, Hand> winners = round.determineWinners(playersBestHands);
+        Map<Game.Player, Hand> playersBestHands = round.determinePlayersBestHands(players, board);
+        Map<Game.Player, Hand> winners = round.determineWinners(playersBestHands);
         assertThat(winners).hasSize(1);
         assertThat(winners).containsKey(player1);
         assertThat(winners).doesNotContainKeys(player2, player3);

@@ -1,0 +1,297 @@
+Temperaments in Poker
+
+TAG - Tight Aggressive
+ - bets when have good hands
+ - Raise 3x the big blind
+ - fold with bad hands
+ - recommended style
+ - Dan Harrington
+
+LAG - this is playable too, depending on the other players
+TP and LP are playing sub-optimally
+
+                        Aggressive            Passive
+                        (bets often)  |  (bets infrequently)
+------------------------------------------------------------
+Tight (Calls seldom) |    TAG         |   TP "Weak"
+------------------------------------------------------------
+Loose (Calls Often)  |    LAG         |   Calling Machine
+
+* effective stack = most chips you can lose
+* M ratio = effective stack / sum of the blinds and the antes
+ - how many rounds of poker you can survive if you fold every single hand
+ - A high M means the player can afford to wait a high number of rounds before making a move.
+ - The concept applies primarily in tournament poker; in a cash game, a player can in principle manipulate his M at will, simply by purchasing more chips.
+ - A player with a low M must act soon or be weakened by the inability to force other players to fold with aggressive raises.
+ - https://en.wikipedia.org/wiki/M-ratio
+* Effective M = M * how shorthanded your table is === number of 10-handed table you can survive
+ - reduces your M proportionally, because you're playing the blinds
+ - informs you when to make your moves
+
+
+Fold equity?
+Push equity?
+c-bet - continution bet
+
+
+ST: Steal?
+CST:Call steal
+3b:3 bet - reraise on the flop (first is matching blind, then raise, then re-raise)
+4b: 4 bet - second reraise on the flop
+F3: Fold to 3 bet
+cb: continuation bet
+fcb: fold to c-bet
+DBF: Double Barrel then fold?
+FDB: Fold to double barrel
+CRF: Check-raise flop
+FCR: Fold to a check-raise
+BIP: Bet in position?
+BOP: Bet Out of Position?
+LM: Limp? - called the big blind
+AF: Aggression Factor
+VPIP: voluntarily put money in pot (before flop only) - how tight/loose player is
+
+https://en.wikipedia.org/wiki/Aggression_(poker)
+
+
+Last player to raise has to show hands first
+
+STARTING HANDS
+--------------
+* A+J off-suit VS 6+6 has 46% chance of winning ('a coin flip')
+ - to win, need A, J or a straight
+ - A+J suited is 48% due to flush
+
+* K+Q off-suit VS 8+8 has 46% as well
+ - still have two over-cards against opponents pair
+
+* If opponent has A+A, what do you want?
+ - Ideally A+A
+ - Not K+K!!
+ - 5+6 suited is next best - 23%
+   - suited connectors have a stronger chance of a straight or flush than other cards
+   - 5+6 because 2,3,4 and 7,8,9 will not help A+A get straight
+
+Horror hands: K+10-off, KA?, KJ, AQ, JJ
+ - Ace with weak kicker
+ - A+T off-suit should be played as a stealing hand, don't get too involved
+    - Beaten by A+J,Q,K and J+J+
+    - fold or
+    - raise to limit your post flop opponents
+ - careful when against aggressive players as they will reraise
+
+* Don't raise on A+10 under the gun (first to act)??
+* Beginners need to focus on starting hands, but real skill comes post-flop
+
+Underrated hands:
+ - suited 1-gappers: 7+9
+ - to some extent suited 2-gappers
+ - 9+10 suited
+
+POSITION
+--------
+Best position is on the button (dealer) as you get to see everyone play first
+Next best is behind the dealer
+
+pre-flop:  UTG, UTG+1, UTG+2, UTG+3, Hijack, Cut off, Button, SB, BB
+post-flop: SB, BB, UTG, UTG+1, UTG+2, UTG+3, Hijack, Cut off, Button
+           |-- early ---|------middle-------|--------- late -------|
+Success:       34.6%           26.7%                   39.7%
+
+Play only very strong hands when in early or middle position
+Play majority of hands in late position
+
+
+UNDER THE GUN, play premium hands ONLY:
+ - TT - AA
+ - AKo - AQo
+
+EARLY POSITION
+* If you are blind and everyone has FOLDED, can extend you range (though aggressive players may reraise)
+* If someone has CALLED before you:
+ - RAISE with any pairs above 88+, AJo+
+ - CALL with suited-connectors (87s), suited-highcards (KTs)
+* If someone has RAISED before you:
+ - RE-RAISE with QQ+, AKo
+ - if you have a lot of chips, still worth CALLing with lower pairs (66), suited connectors/1-gappers
+(* Play top 10% of hands)
+
+MIDDLE POSITION
+* If everyone has FOLDED:
+ - AVOID LIMPING (always raise or fold)
+ - RAISE with 77+, AJo-AKo, QTs+ (suited and higher than a T)
+ - consider lower suited-connectors
+* If someone has CALLED before you:
+ - CALL with 99+, QTs+, suited-connectors
+* If someone has RAISED before you:
+ - RE-RAISE with TT+, AKo, AQo
+ - CALL with suited-connectors, 99 and below
+ - be aware of opponents who have raised in early position
+
+LATE POSITION
+* If everyone has FOLDED:
+ - RAISE with 22+ (any pair), A3s+ (any suited Ace), A7o+, KT+ (any two cards T or higher), suited-connectors
+ - be AGGRESSIVE, raise or fold
+* If someone has CALLED before you:
+ - RAISE with TT+, AJo-AKo
+ - CALL with 22+, 9Qs+ (suited 9 or higher), A3s+, any suited-connectors
+* If someone has RAISE before you:
+ - tighten up
+ - RE-RAISE with TT+, AQo, AKo
+ - CALL with 77-99, suited-connectors
+
+
+UNDER THE GUN
+* TT - AA, AKo - AQo
+
+EARLY POSITION
+* FOLDED: extend range from TT - AA, AKo - AQo
+* CALLED:
+ - RAISE 88+, AJo+
+ - CALL 87s+, TJs+
+* RAISED:
+ - RAISE QQ+, AKo
+ - CALL 66-JJ, SC/1G
+
+MIDDLE POSITION
+* FOLDED:
+ - RAISE 77+, AJo-AKo, TJs+
+ - DON'T CALL
+* CALLED:
+ - CALL 99+, QTs+, 87s+
+* RAISED:
+ - RAISE TT+, AKo, AQo
+ - CALL 87s+, 22-99
+
+LATE POSITION
+* FOLDED:
+ - RAISE 22+, A3s+, A7o+, TJ+, 87s+
+ - DON'T CALL
+* CALLED:
+ - RAISE TT+, AJo-AKo
+ - CALL 22+, 9Qs+, A3s+, 56s+
+* RAISED:
+ - RAISE TT+, AQo, AKo
+ - CALL 77-99, 87s+
+
+
+BLUFFING
+---------
+* Attack signs of weakness
+* Don't bluff when there are too many other players
+* Bluff to represent a hand.
+* Continuation bet
+ - if you raise pre-flop, should continue to raise post-flop
+ - raising pre-flop, then check is a sign of weakness
+ - c-bet LESS often against 3 or more opponents
+ - c-bet LESS often against tricky opponent (they may test with a reraise)
+ - c-bet MORE often if opponent is TIGHT
+ - c-bet MORE often if the board is dry (low unsuited, less connected cards)
+
+
+BETTING
+-------
+* Betting should have a purpose, usually one of:
+ - gaining value
+ - protected your hand
+   - e.g. you think you're ahead but might not be if more cards are shown
+ - bluffing opponents out
+ - gaining information
+   - see how your opponent will react
+
+* Value betting
+ - induce call from your opponent to extract chips from them
+ - don't go so high that they fold
+
+* Bet size
+ - personal to the player
+ - players tend to bet more on better hands, so if you play with them long enough you can find out what they're bet sizing means
+ - 60% of pot (post-flop) to protect hand and gain value
+
+* Over-bet - betting large amount compared to the pot, usually a bet that is greater than the pot size
+ - can be used to find out what the opponent will do
+
+* Folding
+ - 'Art of folding' in this example below is H defining his hand so that he could easily define V's hand.
+ Hero: KQo, Villain: 9c8s (big blind)
+ H: small raise to 475
+ V: Call as its small raise and he's defending his blind
+ Flop: 8TJ clubs
+  - V has pair of 8's and open ended straight flush draw
+  - H has two overcards and just a straight draw
+ V: checks
+ H: checked behind V
+   - sensed that he could well have hit the flop
+   - didn't think he could get away with betting the flop as a bluff
+   - wanted to have a chance to catch the straight
+ Turn: 9 spades
+   - Now V has a pair and open ended straight flush draw
+   - H has straight
+   - V obviously checks
+   - What is right bet size for H?
+   - H: bets 1000 (big bet, 80% of pot)
+     - if he is going to draw to a club, wants to make him pays big price for it
+ River: 9 hearts
+   - V has Full House
+   - V: checks
+   - H thinks there's a good chance V has a queen, so he might just call a bet
+   - H: overbets to >pot
+     - decides to 'polarize his range'
+     - indicates he either has a really strong hand or is bluffing
+     - How V reacts to this will give away how strong he hand it
+     - if V has Q, it's not strong enough to check-raise
+     - if V re-raises, then he thinks he can beat a good hand
+     - makes the next decision easier
+    * V: raises to 10000
+     - either he's raising with a good hand or is a bluff (but the draw makes this extremely unlikely
+     - If H had raised e.g. 1400 instead of the over-bet, V might have raised 5000 and the decision to fold would have been hard.
+
+
+BETTING 2
+---------
+* Bet sizes are relative to pot
+* half pot is small
+* 2/3 - 3/4 is medium
+* > 3/4 is large bet
+
+WHEN TO SMALL BET:
+* CBETs should be kept same size to make bluffing indistinguishable
+* On a very dry board
+ - it's unlikely your opponents have big hands
+ - eliminates one of the most important reasons to bet big if you're in the same situation on the river
+ - small bet is enough to give you the info you need
+ - allows you to gain this info and fold without losing too many chips
+* On the river (info or value bet)
+ - elicit a call when you think you're ahead
+
+WHEN TO LARGE BET:
+* pre-flop is larger due to having a minimum bet size of 2-3 times the big blind
+* on dangerous boards
+ - lots of draws possible
+ - even more so if you have several opponents and have a strong hand
+ - most drawing players will fold under these circumstances
+* when you have a monster
+* when bluffing
+* large bet signals either a monster or bluff
+ - forces opponent to make a big decision
+
+Use MEDIUM sized bets for all other situations
+
+BLOCKER BET
+* Small bet on the river when you're OUT OF POSITION
+ - designed to deter your opponent from betting
+ - if you check, they might place a large bet
+ - a small bet might make a bluffing opponent fold
+ - otherwise it might make them call
+ - they'll only raise if they have a hand
+
+OVERBET
+* Usually larger than the total pot
+* Used to confuse opponent
+* polarise hand
+
+UNDERBET
+* Small in relation to pot
+* Used to extract value from a person who is perceived to have a weak hand
+
+BLANK - Community card that lands that appears to have no bearing on anyone's hand

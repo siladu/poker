@@ -48,13 +48,25 @@ public class HandTest {
     }
 
     @Test
-    public void shouldBeStraight() {
+    public void shouldBeAceHighStraight() {
         List<Card> hand = List.of(
                 new Card(ACE, SPADES),
                 new Card(QUEEN, HEARTS),
                 new Card(KING, CLUBS),
                 new Card(JACK, HEARTS),
                 new Card(TEN, CLUBS)
+        );
+        assertThat(Hand.from(hand)).isEqualTo(new Hand(STRAIGHT, hand));
+    }
+
+    @Test
+    public void shouldBeAceLowStraight() {
+        List<Card> hand = List.of(
+                new Card(ACE, SPADES),
+                new Card(TWO, HEARTS),
+                new Card(THREE, CLUBS),
+                new Card(FOUR, HEARTS),
+                new Card(FIVE, CLUBS)
         );
         assertThat(Hand.from(hand)).isEqualTo(new Hand(STRAIGHT, hand));
     }

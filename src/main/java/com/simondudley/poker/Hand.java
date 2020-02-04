@@ -3,9 +3,11 @@ package com.simondudley.poker;
 import com.google.common.collect.Lists;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static com.simondudley.poker.Card.Rank;
+import static com.simondudley.poker.Card.Rank.ACE;
 import static com.simondudley.poker.Card.Suit;
 import static com.simondudley.poker.Hand.HandValue.*;
 import static java.util.stream.Collectors.*;
@@ -77,8 +79,12 @@ class Hand implements Comparable<Hand> {
     }
 
     private static boolean isStraight(List<Card> hand) {
+        return checkIsStraight(hand, e -> e.rank.value) || checkIsAceLowStraight(hand);
+    }
+
+    private static boolean checkIsStraight(List<Card> hand, Function<Card, Integer> getRankValue) {
         List<Integer> sortedRankValues = hand.stream()
-                .map(e -> e.rank.value)
+                .map(getRankValue)
                 .sorted()
                 .collect(toList());
 
@@ -88,6 +94,10 @@ class Hand implements Comparable<Hand> {
             }
         }
         return true;
+    }
+
+    private static boolean checkIsAceLowStraight(List<Card> hand) {
+        return checkIsStraight(hand, e -> e.rank.value == ACE.value ? 1 : e.rank.value);
     }
 
     private static boolean isFlush(List<Card> hand) {
